@@ -14,9 +14,10 @@ public class PacienteEntity {
     private String correo;
     private String username;
     private String pass;
+    private Integer idDoctor;
 
     @Id
-    @Column(name = "idPaciente")
+    @Column(name = "id_paciente")
     public int getIdPaciente() {
         return idPaciente;
     }
@@ -26,7 +27,7 @@ public class PacienteEntity {
     }
 
     @Basic
-    @Column(name = "firstName")
+    @Column(name = "first_name")
     public String getFirstName() {
         return firstName;
     }
@@ -36,7 +37,7 @@ public class PacienteEntity {
     }
 
     @Basic
-    @Column(name = "lastName")
+    @Column(name = "last_name")
     public String getLastName() {
         return lastName;
     }
@@ -56,7 +57,7 @@ public class PacienteEntity {
     }
 
     @Basic
-    @Column(name = "LastStatus")
+    @Column(name = "last_status")
     public String getLastStatus() {
         return lastStatus;
     }
@@ -113,5 +114,15 @@ public class PacienteEntity {
     @Override
     public int hashCode() {
         return Objects.hash(idPaciente, firstName, lastName, ci, lastStatus, correo, username, pass);
+    }
+
+    @Basic
+    @Column(name = "id_doctor")
+    public Integer getIdDoctor() {
+        return idDoctor;
+    }
+
+    public void setIdDoctor(Integer idDoctor) {
+        this.idDoctor = idDoctor;
     }
 }

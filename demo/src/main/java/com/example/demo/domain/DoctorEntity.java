@@ -15,7 +15,7 @@ public class DoctorEntity {
     private String pass;
 
     @Id
-    @Column(name = "idDoctor")
+    @Column(name = "id_doctor")
     public int getIdDoctor() {
         return idDoctor;
     }
@@ -25,7 +25,7 @@ public class DoctorEntity {
     }
 
     @Basic
-    @Column(name = "firstName")
+    @Column(name = "first_name")
     public String getFirstName() {
         return firstName;
     }
@@ -35,7 +35,7 @@ public class DoctorEntity {
     }
 
     @Basic
-    @Column(name = "lastName")
+    @Column(name = "last_name")
     public String getLastName() {
         return lastName;
     }
