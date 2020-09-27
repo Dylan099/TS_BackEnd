@@ -38,10 +38,21 @@ public class DoctorBl {
         return pacienteEntityList;
     }
 
-
     public List<PacienteEntity> create_pacientes_list(int id_doctor) {
         List<PacienteEntity> pacienteEntityList= pacienteDtoList(id_doctor);
         return pacienteEntityList;
+
+    }
+
+
+    public List<String> pacienteNameList(int id_doctor){
+        List<String> pacienteNameList = pacienteRepository.findFirstNameByIdDoctor(id_doctor);
+        return pacienteNameList;
+    }
+
+    public List<String> create_pacientes_list_name(int id_doctor) {
+        List<String> pacienteNameList= pacienteNameList(id_doctor);
+        return pacienteNameList;
 
     }
 

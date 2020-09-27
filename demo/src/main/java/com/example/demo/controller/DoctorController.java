@@ -20,6 +20,16 @@ public class DoctorController {
         this.doctorBl = doctorBl;
     }
 
+
+    @RequestMapping("/listaPacientesNombre")
+    public List<String> create_pacientes_list_name() {
+        //Recupera los datos de los pacientes del doctor con el id ""
+        List<String> pacientesListName= doctorBl.create_pacientes_list_name(1);
+        return pacientesListName;
+
+    }
+
+
     @RequestMapping("/listaPacientes")
     public List<PacienteEntity> create_pacientes_list() {
         //Recupera los datos de los pacientes del doctor con el id ""
@@ -27,8 +37,6 @@ public class DoctorController {
         return pacienteDtoList;
 
     }
-
-
     @RequestMapping("/listaPacientesPDF")
     public String create_pdf_pacientes_list() throws FileNotFoundException, DocumentException {
         //Recupera los datos de los pacientes del doctor con el id "" y los guarda en un pdf
