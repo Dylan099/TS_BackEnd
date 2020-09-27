@@ -62,6 +62,12 @@ public class RegisterBl {
         doctorRepository.save(doctorEntity);
     }
 
+    public void subToDoc(int id_paciente,int id_doctor){
+        PacienteEntity pacienteEntity = pacienteRepository.findPacienteEntityByIdPaciente(id_paciente);
+        pacienteEntity.setIdDoctor(id_doctor);
+        pacienteRepository.save(pacienteEntity);
+    }
+
     public String getFullName(){
         List<DoctorEntity> waso = doctorRepository.findAll();
         for (DoctorEntity de:waso

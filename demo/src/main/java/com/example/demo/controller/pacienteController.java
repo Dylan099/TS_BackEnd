@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 
 import com.example.demo.bl.RegisterBl;
+import com.example.demo.dao.DoctorRepository;
+import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.DoctorEntity;
 import com.example.demo.dto.DoctorDto;
 import com.example.demo.dto.PacienteDto;
@@ -12,10 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class pacienteController {
     RegisterBl registerBl;
+    DoctorRepository doctorRepository;
+    PacienteRepository pacienteRepository;
 
     @Autowired
-    public pacienteController(RegisterBl registerBl) {
+    public pacienteController(RegisterBl registerBl,PacienteRepository pacienteRepository, DoctorRepository doctorRepository) {
         this.registerBl = registerBl;
+        this.pacienteRepository = pacienteRepository;
+        this.doctorRepository = doctorRepository;
     }
 
     @RequestMapping("/loginDoc")
@@ -34,6 +40,13 @@ public class pacienteController {
             return "Acceso paciente";
         else
             return "Denegado Paciente";
+    }
+
+    @RequestMapping("/subToDoc")
+    public String subToDoc(){
+        //TODO: Recuperar campos del form de suscripcion a doctor
+        registerBl.subToDoc(1,1);
+        return "Suscrito a doctor";
     }
 
     @RequestMapping("/waso")
