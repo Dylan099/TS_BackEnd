@@ -8,8 +8,14 @@ import com.example.demo.domain.DoctorEntity;
 import com.example.demo.dto.DoctorDto;
 import com.example.demo.dto.PacienteDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.security.AccessControlException;
 
 @RestController
 public class pacienteController {
@@ -57,12 +63,22 @@ public class pacienteController {
         return "Guardado Doctor";
     }
 
-    @RequestMapping("/maswaso")
-    public String registerPaciente(){
+    @CrossOrigin(origins = "http://localhost:4200")
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    public ResponseEntity registerPaciente(){
         //TODO: Recuper formulario de registro
+
         registerBl.registrarPaciente(new PacienteDto("Cris","Castro","5992709",
                 "castro.inofuentes.cristopher@gmail.com","Sano",0,"CLCAstro","password"));
-        return "Guardado Paciente";
+        System.out.println("REGISTRADO DE PACIENTE CON FRONT");
+        return new ResponseEntity(new Mensaje("Creado"), HttpStatus.CREATED);
+    }
+
+    public static class Mensaje{
+        public String mensaje;
+        public Mensaje(String mensaje){
+            this.mensaje = mensaje;
+        }
     }
 
     @RequestMapping("/menoswaso")
