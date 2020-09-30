@@ -15,6 +15,8 @@ public interface PacienteRepository extends JpaRepository<PacienteEntity,Integer
 
     List<PacienteEntity> findAllByIdDoctor(int id);
 
+    PacienteEntity findPacienteEntityByCorreo(String correo);
+
     @Query(
             value = "SELECT p.first_name FROM paciente p WHERE p.id_doctor = ?1",
             nativeQuery = true)

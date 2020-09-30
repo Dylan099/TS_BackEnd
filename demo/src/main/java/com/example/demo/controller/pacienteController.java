@@ -8,6 +8,7 @@ import com.example.demo.domain.DoctorEntity;
 import com.example.demo.domain.PacienteEntity;
 import com.example.demo.dto.DoctorDto;
 import com.example.demo.dto.PacienteDto;
+import com.example.demo.dto.SuscripcionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,11 +52,17 @@ public class pacienteController {
         return new ResponseEntity(new Mensaje("Creado"), HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping("/subToDoc")
-    public String subToDoc(){
+    @RequestMapping(value = "/subscription", method = RequestMethod.POST)
+    public ResponseEntity subToDoc(@RequestBody SuscripcionDto suscripcionDto, BindingResult bindingResult){
+
         //TODO: Recuperar campos del form de suscripcion a doctor
-        registerBl.subToDoc(1,1);
-        return "Suscrito a doctor";
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
+        }
+        int idPaciente = pacienteRepository.findPacienteEntityByCorreo(suscripcionDto.getCorreoPaciente()).getIdPaciente();
+        int idDoctor = doctorRepository.findDoctorEntityByCorreo(suscripcionDto.getCorreoDoctor()).getIdDoctor();
+        registerBl.subToDoc(idPaciente,idDoctor);
+        return new ResponseEntity(new Mensaje("Se suscribio correctamente"),HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/regisdoct", method = RequestMethod.POST)

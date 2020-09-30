@@ -66,6 +66,7 @@ public class RegisterBl {
         PacienteEntity pacienteEntity = pacienteRepository.findPacienteEntityByIdPaciente(id_paciente);
         pacienteEntity.setIdDoctor(id_doctor);
         pacienteRepository.save(pacienteEntity);
+
     }
 
     public String getFullName(){
