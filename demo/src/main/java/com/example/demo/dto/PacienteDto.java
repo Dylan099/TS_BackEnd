@@ -4,7 +4,7 @@ public class PacienteDto {
     private String firstName;
     private String lastName;
     private String ci;
-    private String correo;
+    public String correo;
     private String lastStatus;
     private int idDoctor;
     private String user;

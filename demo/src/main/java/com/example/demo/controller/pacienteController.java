@@ -5,18 +5,21 @@ import com.example.demo.bl.RegisterBl;
 import com.example.demo.dao.DoctorRepository;
 import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.DoctorEntity;
+import com.example.demo.domain.PacienteEntity;
 import com.example.demo.dto.DoctorDto;
 import com.example.demo.dto.PacienteDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.security.AccessControlException;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class pacienteController {
     RegisterBl registerBl;
@@ -30,22 +33,22 @@ public class pacienteController {
         this.doctorRepository = doctorRepository;
     }
 
-    @RequestMapping("/loginDoc")
-    public String loginDoc(){
-        //TODO: Recuper datos de login
-        if(registerBl.checkLogin("ClCastro","password","doctor"))
-            return "Acceso doctor";
-        else
-            return "Denegado Doctor";
+    @RequestMapping(value = "/logindoctor", method = RequestMethod.POST)
+    public ResponseEntity loginDoc(@RequestBody DoctorEntity doctorRequest, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
+        }
+        registerBl.checkLogin(doctorRequest.getUsername(),doctorRequest.getPass(),"doctor");
+        return new ResponseEntity(new Mensaje("Creado"), HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping("/loginPac")
-    public String loginPac(){
-        //TODO: Recuper datos de login
-        if(registerBl.checkLogin("Nose","password","paciente"))
-            return "Acceso paciente";
-        else
-            return "Denegado Paciente";
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity loginPac(@RequestBody PacienteEntity pacienteRequest, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
+        }
+        registerBl.checkLogin(pacienteRequest.getUsername(),pacienteRequest.getPass(),"paciente");
+        return new ResponseEntity(new Mensaje("Creado"), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping("/subToDoc")
@@ -55,22 +58,24 @@ public class pacienteController {
         return "Suscrito a doctor";
     }
 
-    @RequestMapping("/waso")
-    public String registerDoctor(){
+    @RequestMapping(value = "/regisdoct", method = RequestMethod.POST)
+    public ResponseEntity registerDoctor(@RequestBody DoctorEntity doctorRequest, BindingResult bindingResult){
         //TODO: Recuper formulario de registro
-        registerBl.registrarDoctor(new DoctorDto("Cris","Castro","5992709",
-                "castro.inofuentes.cristopher@gmail.com","CLCastro","password"));
-        return "Guardado Doctor";
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
+        }
+        registerBl.registrarDoctor(new DoctorDto(doctorRequest.getFirstName(),doctorRequest.getLastName(),doctorRequest.getCi(),
+                doctorRequest.getCorreo(),doctorRequest.getUsername(),doctorRequest.getPass()));
+        return new ResponseEntity(new Mensaje("Creado"), HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ResponseEntity registerPaciente(){
-        //TODO: Recuper formulario de registro
-
-        registerBl.registrarPaciente(new PacienteDto("Cris","Castro","5992709",
-                "castro.inofuentes.cristopher@gmail.com","Sano",0,"CLCAstro","password"));
-        System.out.println("REGISTRADO DE PACIENTE CON FRONT");
+    public ResponseEntity registerPaciente(@RequestBody PacienteEntity pacienteRequest, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
+        }
+        registerBl.registrarPaciente(new PacienteDto(pacienteRequest.getFirstName(),pacienteRequest.getLastName(),pacienteRequest.getCi(),
+                pacienteRequest.getCorreo(),"Sano",0,pacienteRequest.getUsername(),pacienteRequest.getPass()));
         return new ResponseEntity(new Mensaje("Creado"), HttpStatus.CREATED);
     }
 
