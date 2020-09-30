@@ -77,4 +77,16 @@ public class RegisterBl {
         }
         return doctorRepository.findDoctorEntityByIdDoctor(1).getFirstName()+doctorRepository.findDoctorEntityByIdDoctor(1).getLastName();
     }
+
+    public boolean verificarCorreoExistentePaciente(String correo){
+        PacienteEntity pacienteEntity= pacienteRepository.findPacienteEntityByCorreo(correo);
+        List<PacienteEntity> pacienteEntityList = pacienteRepository.findAll();
+        return pacienteEntityList.contains(pacienteEntity);
+    }
+
+    public boolean verificarCorreoExistenteDoctor(String correo){
+        DoctorEntity doctorEntity = doctorRepository.findDoctorEntityByCorreo(correo);
+        List<DoctorEntity> doctorEntityList = doctorRepository.findAll();
+        return doctorEntityList.contains(doctorEntity);
+    }
 }

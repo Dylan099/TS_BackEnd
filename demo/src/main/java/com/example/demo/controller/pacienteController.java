@@ -39,8 +39,10 @@ public class pacienteController {
         if(bindingResult.hasErrors()){
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
         }
-        registerBl.checkLogin(doctorRequest.getUsername(),doctorRequest.getPass(),"doctor");
-        return new ResponseEntity(new Mensaje("Creado"), HttpStatus.ACCEPTED);
+        if(registerBl.checkLogin(doctorRequest.getUsername(),doctorRequest.getPass(),"doctor"))
+            return new ResponseEntity(new Mensaje("Aceptado"), HttpStatus.ACCEPTED);
+        else
+            return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -48,14 +50,15 @@ public class pacienteController {
         if(bindingResult.hasErrors()){
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
         }
-        registerBl.checkLogin(pacienteRequest.getUsername(),pacienteRequest.getPass(),"paciente");
-        return new ResponseEntity(new Mensaje("Creado"), HttpStatus.ACCEPTED);
+        if(registerBl.checkLogin(pacienteRequest.getUsername(),pacienteRequest.getPass(),"paciente"))
+            return new ResponseEntity(new Mensaje("Aceptado"), HttpStatus.ACCEPTED);
+        else
+            return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/subscription", method = RequestMethod.POST)
     public ResponseEntity subToDoc(@RequestBody SuscripcionDto suscripcionDto, BindingResult bindingResult){
 
-        //TODO: Recuperar campos del form de suscripcion a doctor
         if(bindingResult.hasErrors()){
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
         }
@@ -67,10 +70,11 @@ public class pacienteController {
 
     @RequestMapping(value = "/regisdoct", method = RequestMethod.POST)
     public ResponseEntity registerDoctor(@RequestBody DoctorEntity doctorRequest, BindingResult bindingResult){
-        //TODO: Recuper formulario de registro
         if(bindingResult.hasErrors()){
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
         }
+        if(registerBl.verificarCorreoExistenteDoctor(doctorRequest.getCorreo()))
+            return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
         registerBl.registrarDoctor(new DoctorDto(doctorRequest.getFirstName(),doctorRequest.getLastName(),doctorRequest.getCi(),
                 doctorRequest.getCorreo(),doctorRequest.getUsername(),doctorRequest.getPass()));
         return new ResponseEntity(new Mensaje("Creado"), HttpStatus.CREATED);
@@ -81,6 +85,8 @@ public class pacienteController {
         if(bindingResult.hasErrors()){
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
         }
+        if(registerBl.verificarCorreoExistentePaciente(pacienteRequest.getCorreo()))
+            return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
         registerBl.registrarPaciente(new PacienteDto(pacienteRequest.getFirstName(),pacienteRequest.getLastName(),pacienteRequest.getCi(),
                 pacienteRequest.getCorreo(),"Sano",0,pacienteRequest.getUsername(),pacienteRequest.getPass()));
         return new ResponseEntity(new Mensaje("Creado"), HttpStatus.CREATED);
@@ -91,11 +97,6 @@ public class pacienteController {
         public Mensaje(String mensaje){
             this.mensaje = mensaje;
         }
-    }
-
-    @RequestMapping("/menoswaso")
-    public String menoswaso(){
-        return registerBl.getFullName();
     }
 }
 
