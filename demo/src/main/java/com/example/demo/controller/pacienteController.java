@@ -39,7 +39,7 @@ public class pacienteController {
         if(bindingResult.hasErrors()){
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
         }
-        if(registerBl.checkLogin(doctorRequest.getUsername(),doctorRequest.getPass(),"doctor"))
+        if(registerBl.checkLogin(doctorRequest.getCorreo(),doctorRequest.getPass(),"doctor"))
             return new ResponseEntity(new Mensaje("Aceptado"), HttpStatus.ACCEPTED);
         else
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
@@ -50,7 +50,7 @@ public class pacienteController {
         if(bindingResult.hasErrors()){
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
         }
-        if(registerBl.checkLogin(pacienteRequest.getUsername(),pacienteRequest.getPass(),"paciente"))
+        if(registerBl.checkLogin(pacienteRequest.getCorreo(),pacienteRequest.getPass(),"paciente"))
             return new ResponseEntity(new Mensaje("Aceptado"), HttpStatus.ACCEPTED);
         else
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);

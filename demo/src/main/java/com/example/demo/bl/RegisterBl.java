@@ -23,13 +23,14 @@ public class RegisterBl {
     }
 
     public boolean checkLogin(String user, String pass, String tipo){
-
+        System.out.println("USERNAME: "+ user);
         try{
             if(tipo.equals("doctor")){
-                DoctorEntity dc = doctorRepository.findDoctorEntityByUsername(user);
+                DoctorEntity dc = doctorRepository.findDoctorEntityByCorreo(user);
+                System.out.println("Encontrado" + pass);
                 return dc.getPass().equals(pass);
             }else if(tipo.equals("paciente")){
-                PacienteEntity pc = pacienteRepository.findPacienteEntityByUsername(user);
+                PacienteEntity pc = pacienteRepository.findPacienteEntityByCorreo(user);
                 return pc.getPass().equals(pass);
             }
             return false;

@@ -27,7 +27,7 @@ public class DoctorController {
     @RequestMapping("/listaPacientesNombre")
     public List<String> create_pacientes_list_name() {
         //Recupera los datos de los pacientes del doctor con el id ""
-        List<String> pacientesListName= doctorBl.create_pacientes_list_name(1);
+        List<String> pacientesListName= doctorBl.create_pacientes_list_name(2);
         return pacientesListName;
 
     }
@@ -35,7 +35,7 @@ public class DoctorController {
     @RequestMapping("/listpatient")
     public List<PacienteEntity> create_pacientes_list() {
         //Recupera los datos de los pacientes del doctor con el id ""
-        List<PacienteEntity> pacienteDtoList= doctorBl.create_pacientes_list(5);
+        List<PacienteEntity> pacienteDtoList= doctorBl.create_pacientes_list(2);
         return pacienteDtoList;
 
     }
@@ -43,7 +43,7 @@ public class DoctorController {
     @RequestMapping("/listpatientPDF")
     public ResponseEntity create_pdf_pacientes_list() throws IOException, DocumentException {
         //Recupera los datos de los pacientes del doctor con el id "" y los guarda en un pdf
-        doctorBl.create_pdf_pacientes_list(1);
+        doctorBl.create_pdf_pacientes_list(2);
         return new ResponseEntity(new DoctorController.Mensaje("Creado"), HttpStatus.ACCEPTED);
 
     }
