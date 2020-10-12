@@ -15,7 +15,7 @@ class DataBase:
         self.cursor = self.connectiondb.cursor()
     
     def select_dataset_x(self):
-        sql = 'SELECT BreathingProblem,Fever,DryCough,SoreThroat,Running0se,Asthma,ChronicLungDisease,Headache,HeartDisease,Diabetes,HyperTension,Fatigue,Gastrointestinal,AbroadTravel,ContactWithCovidPatient,AttendedLargeGathering,VisitedPublicExposedPlacesFamilyWorkingInPublicExposedPlaces,WearingMasks,SanitizationFromMarket FROM dataset'
+        sql = 'SELECT BreathingProblem,Fever,DryCough,SoreThroat,Running0se,Asthma,ChronicLungDisease,Headache,HeartDisease,Diabetes,HyperTension,Fatigue,Gastrointestinal,AbroadTravel,ContactWithCovidPatient,AttendedLargeGathering,VisitedPublicExposedPlaces, FamilyWorkingInPublicExposedPlaces,WearingMasks,SanitizationFromMarket FROM dataset'
         ret = []
         try:
             self.cursor.execute(sql)
@@ -33,8 +33,6 @@ class DataBase:
             listAnswer = self.cursor.fetchall()
             ret = listAnswer
         except Exception as e:
-            raise  
+            raise 
+        self.connectiondb.close() 
         return ret
-
-myDataBase = DataBase()
-xx= myDataBase.select_dataset_y()

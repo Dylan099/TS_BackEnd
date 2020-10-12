@@ -39,9 +39,6 @@ class Prediccion:
 
     def train(neural_net, X, Y, l2_cost, lr=0.5, train=True):
         out = [(None, X)]
-
-        print("entro........................ Forwrard")
-
         #Forwrard pass
         for l, layer in enumerate (neural_net):   #para cada capa
 
@@ -49,57 +46,56 @@ class Prediccion:
             a = neural_net[l].funcion_activacion[0](z) #activacion    
             out.append((z , a))
         # -----------------------------------------
-        
-        print("salio........................ Forwrard")
-
         if train:
-            print("entro........................ train")
             #Backpropagation pass
             deltas = []
             for l in reversed(range(0, len(neural_net))): #para cada capa
-                print("entro........................ for")
                 z = out[l+1][0]
                 a = out[l+1][1]
-                if l == len(neural_net) - 1:
-                    print("entro ........................ if")
-                    deltas.insert(0, l2_cost[1](a,Y) * neural_net[l].funcion_activacion[1](a))
-                else:
-                    print("entro ........................ else")
-                    deltas.insert(0, deltas[0] @ _w.T * neural_net[l].funcion_activacion[1](a))
                 
-                print("salio........................ deltas")
+
+                if l == len(neural_net) - 1:
+                    costo = l2_cost[1](a,Y)
+                    deltas.insert(0, costo * neural_net[l].funcion_activacion[1](a))
+
+                else:
+                    deltas.insert(0, deltas[0] @ _w.T * neural_net[l].funcion_activacion[1](a))
+
 
                 _w = neural_net[l].w
-
-                #Actualizar a los gadientes
-                neural_net[l].b = neural_net[l].b - np.mean(deltas[0], axis=0, keepdims = True) * lr
-                neural_net[l].w = neural_net[l].w - out[l][1].T @ deltas[0] * lr
             
-            print("salio........................ train")
-  
+                #Actualizar a los gadientes
+                b_temp =  neural_net[l].b - np.mean(deltas[0], axis=0, keepdims = True) * lr
+                w_temp =  neural_net[l].w - np.array(out[l][1]).T @ deltas[0] * lr
+                
+
+                neural_net[l].b = b_temp
+                neural_net[l].w = w_temp
+                
         return out[-1][1]
 
         
     def creacion():
         #Parametros de la red
         n = 5434 #numero de datos en el dataset
-        p = 19 #caracteristicas del dataset
+        p = 20 #caracteristicas del dataset
 
         #Datos para el entrenamiento
         myDataBase = DataBase()
         listSymptoms = myDataBase.select_dataset_x()
+
         X = []
         for l in enumerate (listSymptoms):  
             l = np.array(l[1])
             X.append(l)
-            
-        listAnswer =myDataBase.select_dataset_y()
+        X=  np.array(X)
 
+        listAnswer =myDataBase.select_dataset_y()
         Y = []
         for l in enumerate (listAnswer):  
-            l = np.array (l[1], dtype = np.int64 )
-            Y.append(l)
-        Y = pd.Series(Y)
+            Y.append(l[1])
+        Y=  np.array(Y)
+
 
         #Funcion de activacion
         sigmoide = (lambda x: 1 / (1 + np.exp(-x)),   #funcion sigmoide
@@ -109,16 +105,17 @@ class Prediccion:
         l2_cost = (lambda Yp, Yr: (np.mean(np.power((Yp - Yr),2))),
                 lambda Yp, Yr: (Yp - Yr))
 
-        topology = [p,20,25,35,40,19,1]  #la salida debe ser uno
+        #topology = [p,20,25,35,40,19,1]  #la salida debe ser uno
 
-        print("entro........................ crear_red_neuronal")
+        topology = [p,1,1,1]  #la salida debe ser uno
 
         neural_net = Prediccion.crear_red_neuronal(topology,sigmoide)
 
-        print("salio........................ crear_red_neuronal")
 
-        for i in range(2):
+        for i in range(3):
             pY = Prediccion.train(neural_net, X, Y, l2_cost,0.05)
+        
+
 
         R = 1.000- l2_cost[0](pY, Y)
         print("R = ", R)
@@ -133,10 +130,10 @@ class Prediccion:
 
         neural_net= Prediccion.creacion()
 
-        print("salio........................ creacion")
         
         out = [(None, datos)]
-        for l, layer in enumerate (neural_net):   #para cada capa
+        for l, layer in enumerate (neural_net):   #para cada 
+
             z = out[-1][1] @ neural_net[l].w + neural_net[l].b  #suma ponderada
             a = neural_net[l].funcion_activacion[0](z) #activacion    
             out.append((z , a))
