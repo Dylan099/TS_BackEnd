@@ -1,5 +1,11 @@
+import numpy as np
+import pandas as pd
+import pymysql
 import socket
+
 from mypackage.Prediccion import Prediccion
+from mypackage.DataBase  import DataBase
+from mypackage.NeuralLayer import NeuralLayer
 
 def recibirTodo(sock):
     global myprediccion
@@ -14,7 +20,7 @@ def prediccion_paciente():
 
 
 mi_socket = socket.socket()
-mi_socket.bind (('localhost',50))
+mi_socket.bind (('localhost',500))
 mi_socket.listen(5)
 while True:
 	conexion, direccion=mi_socket.accept()
