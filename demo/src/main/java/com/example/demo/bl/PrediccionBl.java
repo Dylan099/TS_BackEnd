@@ -13,7 +13,7 @@ import java.net.Socket;
 public class PrediccionBl {
 
     static final String HOST = "localhost";
-    static final int PUERTO = 50;
+    static final int PUERTO = 500;
 
     public PrediccionBl() {
     }
@@ -25,6 +25,7 @@ public class PrediccionBl {
             socket = new Socket(HOST,PUERTO);
             send_data(socket, sintomasDto);
             answer= recive_data(socket);
+            socket.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,55 +33,44 @@ public class PrediccionBl {
         return answer;
     }
 
-    public void send_data(Socket socket, SintomasDto sintomasDto) throws IOException {
-        String getBreathingProblem=String.valueOf(sintomasDto.getBreathingProblem());
-        String getFever=String.valueOf(sintomasDto.getFever());
-        String getDryCough=String.valueOf(sintomasDto.getDryCough());
-        String getSoreThroat=String.valueOf(sintomasDto.getSoreThroat());
-        String getRunningNose=String.valueOf(sintomasDto.getRunningNose());
-        String getAsthma=String.valueOf(sintomasDto.getAsthma());
-        String getChronicLungDisease=String.valueOf(sintomasDto.getChronicLungDisease());
-        String getHeadache=String.valueOf(sintomasDto.getHeadache());
-        String getHeartDisease=String.valueOf(sintomasDto.getHeartDisease());
-        String getDiabetes=String.valueOf(sintomasDto.getDiabetes());
-        String getHyperTension=String.valueOf(sintomasDto.getHyperTension());
-        String getFatigue=String.valueOf(sintomasDto.getFatigue());
-        String getGastrointestinal=String.valueOf(sintomasDto.getGastrointestinal());
-        String getAbroadTravel=String.valueOf(sintomasDto.getAbroadTravel());
-        String getContactWithCovidPatient=String.valueOf(sintomasDto.getContactWithCovidPatient());
-        String getAttendedLargeGathering=String.valueOf(sintomasDto.getAttendedLargeGathering());
-        String getVisitedPublicExposedPlaces=String.valueOf(sintomasDto.getVisitedPublicExposedPlaces());
-        String getFamilyWorkingInPublicExposedPlaces=String.valueOf(sintomasDto.getFamilyWorkingInPublicExposedPlaces());
-        String getWearingMasks=String.valueOf(sintomasDto.getWearingMasks());
-        String getSanitizationFromMarket=String.valueOf(sintomasDto.getSanitizationFromMarket());
-
+    public static void send_data(Socket socket, SintomasDto sintomasDto) throws IOException {
         DataOutputStream mensajeSalida = new DataOutputStream(socket.getOutputStream());
+        System.out.println("sintomasDto.getBreathingProblem() "+sintomasDto.getBreathingProblem());
 
-        mensajeSalida.writeUTF(getBreathingProblem);
-        mensajeSalida.writeUTF(getFever);
-        mensajeSalida.writeUTF(getDryCough);
-        mensajeSalida.writeUTF(getSoreThroat);
-        mensajeSalida.writeUTF(getRunningNose);
-        mensajeSalida.writeUTF(getAsthma);
-        mensajeSalida.writeUTF(getChronicLungDisease);
-        mensajeSalida.writeUTF(getHeadache);
-        mensajeSalida.writeUTF(getHeartDisease);
-        mensajeSalida.writeUTF(getDiabetes);
-        mensajeSalida.writeUTF(getHyperTension);
-        mensajeSalida.writeUTF(getFatigue);
-        mensajeSalida.writeUTF(getGastrointestinal);
-        mensajeSalida.writeUTF(getAbroadTravel);
-        mensajeSalida.writeUTF(getContactWithCovidPatient);
-        mensajeSalida.writeUTF(getAttendedLargeGathering);
-        mensajeSalida.writeUTF(getVisitedPublicExposedPlaces);
-        mensajeSalida.writeUTF(getFamilyWorkingInPublicExposedPlaces);
-        mensajeSalida.writeUTF(getWearingMasks);
-        mensajeSalida.writeUTF(getSanitizationFromMarket);
+
+        mensajeSalida.write(sintomasDto.getBreathingProblem());
+        mensajeSalida.write(sintomasDto.getFever());
+        mensajeSalida.write(sintomasDto.getDryCough());
+        mensajeSalida.write(sintomasDto.getSoreThroat());
+        mensajeSalida.write(sintomasDto.getRunningNose());
+        mensajeSalida.write(sintomasDto.getAsthma());
+        mensajeSalida.write(sintomasDto.getChronicLungDisease());
+        mensajeSalida.write(sintomasDto.getHeadache());
+        mensajeSalida.write(sintomasDto.getHeartDisease());
+        mensajeSalida.write(sintomasDto.getDiabetes());
+        mensajeSalida.write(sintomasDto.getHyperTension());
+        mensajeSalida.write(sintomasDto.getFatigue());
+        mensajeSalida.write(sintomasDto.getGastrointestinal());
+        mensajeSalida.write(sintomasDto.getAbroadTravel());
+        mensajeSalida.write(sintomasDto.getContactWithCovidPatient());
+        mensajeSalida.write(sintomasDto.getAttendedLargeGathering());
+        mensajeSalida.write(sintomasDto.getVisitedPublicExposedPlaces());
+        mensajeSalida.write(sintomasDto.getFamilyWorkingInPublicExposedPlaces());
+        mensajeSalida.write(sintomasDto.getWearingMasks());
+        mensajeSalida.write(sintomasDto.getSanitizationFromMarket());
+
+
+
     }
 
+
     public String recive_data(Socket socket) throws IOException {
+        System.out.println("recive_data ");
+
         BufferedReader stdIn =new BufferedReader(new InputStreamReader(socket.getInputStream()));
         String mensajeEntrada = stdIn.readLine();
+        System.out.println("mensajeEntrada "+mensajeEntrada);
+
         return mensajeEntrada;
     }
 

@@ -126,25 +126,15 @@ class Prediccion:
 
     def predecir(self):
 
-        pre_datos = [[self.BreathingProblem.decode(), self.Fever.decode(), self.DryCough.decode(), self.SoreThroat.decode(), self.RunningNose.decode(), self.Asthma.decode() ,
-                    self.ChronicLungDisease.decode(), self.Headache.decode(), self.HeartDisease.decode(), self.Diabetes.decode(), self.HyperTension.decode(), self.Fatigue.decode() ,
-                    self.Gastrointestinal.decode(), self.AbroadTravel.decode(), self.ContactWithCovidPatient.decode(), self.AttendedLargeGathering.decode(), self.VisitedPublicExposedPlaces.decode() ,
-                    self.FamilyWorkingInPublicExposedPlaces.decode(), self.WearingMasks.decode(), self.SanitizationFromMarket.decode()]]
 
-
-        # TODO No recupera los datos recibidos, se debe convertir de np.str a np.int32 o int
-        #          
-        datos = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
-        for i in range(len(pre_datos[0])):
-            if pre_datos[0][i] is "01": #No reconoce si es V o F
-                datos[0][i] == 1
-                print("es 1")
-
-        pre_datos =  np.array(pre_datos)
+        datos = [[self.BreathingProblem, self.Fever, self.DryCough, self.SoreThroat, self.RunningNose, self.Asthma ,
+                    self.ChronicLungDisease, self.Headache, self.HeartDisease, self.Diabetes, self.HyperTension, self.Fatigue ,
+                    self.Gastrointestinal, self.AbroadTravel, self.ContactWithCovidPatient, self.AttendedLargeGathering, self.VisitedPublicExposedPlaces ,
+                    self.FamilyWorkingInPublicExposedPlaces, self.WearingMasks, self.SanitizationFromMarket]]
+        
         datos =  np.array(datos)
 
         neural_net= Prediccion.creacion()
-
         
         out = [(None, datos)]
         for l, layer in enumerate (neural_net):   #para cada 
@@ -154,10 +144,9 @@ class Prediccion:
             out.append((z , a))
         # -----------------------------------------
         #return round(a[0][0])
-        respuesta = "si"
-        if (round(a[0][0])) == 0:
-            respuesta = "no"     
-        print(respuesta) 
+        respuesta = "no"
+        if (round(a[0][0])) == 1:
+            respuesta = "si"     
         return respuesta
 
 
