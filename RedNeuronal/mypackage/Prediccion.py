@@ -77,6 +77,7 @@ class Prediccion:
 
         
     def creacion():
+        global R
         #Parametros de la red
         n = 5434 #numero de datos en el dataset
         p = 20 #caracteristicas del dataset
@@ -118,7 +119,7 @@ class Prediccion:
         
 
 
-        R = 1.000- l2_cost[0](pY, Y)
+        R = round(1.000- l2_cost[0](pY, Y),2)
         print("R = ", R)
         
         return neural_net
@@ -144,10 +145,10 @@ class Prediccion:
             out.append((z , a))
         # -----------------------------------------
         #return round(a[0][0])
-        respuesta = "no"
+        respuesta = "no "
         if (round(a[0][0])) == 1:
-            respuesta = "si"     
-        return respuesta
+            respuesta = "si "     
+        return respuesta, R
 
 
 #myprediccion = Prediccion(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)

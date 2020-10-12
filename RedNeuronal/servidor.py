@@ -56,9 +56,10 @@ while True:
 	conexion, direccion=mi_socket.accept()
 	print ("Conexion hecha")
 	recibirTodo(conexion)
-	mensajeSalida = prediccion_paciente()
+	mensajeSalida, R = prediccion_paciente()
 	print ("mensajeSalida ..........",mensajeSalida)
 	conexion.send(bytes(mensajeSalida,'UTF-8'))
+	conexion.send(bytes(str(R),'UTF-8'))
 	conexion.close()
 
 #No borrar los print!!!!!!!!!!!!!!!!!
