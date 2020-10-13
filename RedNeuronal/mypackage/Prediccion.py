@@ -114,12 +114,10 @@ class Prediccion:
         neural_net = Prediccion.crear_red_neuronal(topology,sigmoide)
 
 
-        for i in range(3):
+        R = 0
+        while R < 0.85:
             pY = Prediccion.train(neural_net, X, Y, l2_cost,0.05)
-        
-
-
-        R = round(1.000- l2_cost[0](pY, Y),4)
+            R = round(1.000- l2_cost[0](pY, Y),4)
         print("R = ", R)
         
         return neural_net
