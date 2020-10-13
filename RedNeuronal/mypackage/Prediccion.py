@@ -119,7 +119,7 @@ class Prediccion:
         
 
 
-        R = round(1.000- l2_cost[0](pY, Y),2)
+        R = round(1.000- l2_cost[0](pY, Y),4)
         print("R = ", R)
         
         return neural_net

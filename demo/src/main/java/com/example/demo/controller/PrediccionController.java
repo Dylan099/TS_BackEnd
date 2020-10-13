@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -36,7 +37,7 @@ public class PrediccionController {
     }
 
     @RequestMapping("/testPDF")
-    public void create_pdf_pacientes_list() throws IOException, DocumentException {
+    public void create_pdf_pacientes_list() throws IOException, DocumentException, URISyntaxException {
         //Llama a prediccionBl para el test----sintomasDto creado temporalmente para pruebas
         SintomasDto sintomasDto = new SintomasDto(1,1,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0);
         String answer= prediccionBl.answer(sintomasDto);

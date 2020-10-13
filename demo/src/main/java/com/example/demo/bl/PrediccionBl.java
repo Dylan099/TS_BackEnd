@@ -3,14 +3,16 @@ package com.example.demo.bl;
 import com.example.demo.domain.PacienteEntity;
 import com.example.demo.dto.SintomasDto;
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
+
+import com.itextpdf.text.pdf.TextField;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.net.Socket;
-import java.util.List;
+import java.net.*;
 import java.util.StringTokenizer;
+import com.itextpdf.text.Image;
 
 @Service
 public class PrediccionBl {
@@ -75,7 +77,7 @@ public class PrediccionBl {
 
         StringTokenizer tokens=new StringTokenizer(mensajeEntrada);
         String sino=tokens.nextToken();
-        String R =tokens.nextToken();
+        String R = String.valueOf((Float.parseFloat(tokens.nextToken())*100));
 
 
         String answer = "Con un "+ R + "% Usted "+sino+ " tiene Covid-19";
@@ -83,25 +85,33 @@ public class PrediccionBl {
     }
 
 
-    public void create_pdf(String answer) throws FileNotFoundException, DocumentException {
+    public void create_pdf(String answer) throws IOException, DocumentException, URISyntaxException {
 
-        Document document = new Document(PageSize.LETTER, 80, 80, 75, 75);
+        Document document = new Document(PageSize.LETTER, 80, 80, 50, 75);
         PdfWriter.getInstance(document, new FileOutputStream("testPDF.pdf"));
         document.open();
 
-        Paragraph titulo = new Paragraph();
+
+        Image logoP = Image.getInstance ("images/logoP.png");
+        logoP.scaleToFit(500, 400);
+        logoP.setAlignment(Paragraph.ALIGN_LEFT);
+        document.add(logoP);
+        Image linea = Image.getInstance ("images/linea.png");
+        document.add(linea);
+
+
+        BaseFont baseFont = BaseFont.createFont("images/Madina.ttf", BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
+        Font font = new Font(baseFont);
+
+        font.setSize(36);
+        Paragraph titulo = new Paragraph("Resultados", font);
         titulo.setAlignment(Paragraph.ALIGN_CENTER);
-        titulo.setFont(FontFactory.getFont("Times New Roman", 36, Font.BOLD, BaseColor.BLACK));
-        titulo.add("Resultado de: Covid-19");
         document.add(titulo);
 
-        Paragraph text = new Paragraph();
-        text.setAlignment(Paragraph.ALIGN_CENTER);
-        text.setFont(FontFactory.getFont("Times New Roman", 18, Font.NORMAL, BaseColor.BLACK));
+        font.setSize(20);
+        Paragraph text = new Paragraph(answer, font);
         text.setAlignment(Element.ALIGN_JUSTIFIED);
-        text.add(" \n"+answer+" \n\nRecuerde que esta es una preddicion solamente, para un resultado mas certero consulte a su medico ");
         document.add(text);
-
 
         document.close();
 

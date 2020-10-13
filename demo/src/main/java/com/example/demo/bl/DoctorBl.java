@@ -1,22 +1,24 @@
 package com.example.demo.bl;
 
 
+
 import com.example.demo.dao.DoctorRepository;
 import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.PacienteEntity;
 import com.example.demo.dto.PacienteDto;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Phrase;
+import com.itextpdf.text.*;
+import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Image;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -57,7 +59,7 @@ public class DoctorBl {
     }
 
 
-    public void create_pdf_pacientes_list(int id_doctor) throws FileNotFoundException, DocumentException {
+    public void create_pdf_pacientes_list(int id_doctor) throws IOException, DocumentException {
 
         List<PacienteEntity> pacienteEntityList= pacienteDtoList(id_doctor);
 
@@ -65,6 +67,18 @@ public class DoctorBl {
         PdfWriter.getInstance(document, new FileOutputStream("pacienteList.pdf"));
 
         document.open();
+
+        Image logoP = Image.getInstance ("images/logoP.png");
+        logoP.scaleToFit(500, 400);
+        logoP.setAlignment(Paragraph.ALIGN_LEFT);
+        document.add(logoP);
+        Image linea = Image.getInstance("images/linea.png");
+        document.add(linea);
+
+        Font font = FontFactory.getFont(FontFactory.COURIER, 20, BaseColor.BLACK);
+        Paragraph titulo = new Paragraph("Lista", font);
+        titulo.setAlignment(Paragraph.ALIGN_CENTER);
+        document.add(titulo);
 
         PdfPTable table = new PdfPTable(5);
         addTableHeader(table);
