@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -109,5 +110,25 @@ public class DoctorBl {
             table.addCell(p.getIdStatus().toString());
             table.addCell(p.getCorreo());
         }
+    }
+
+    public List<Integer[]> graficaContagiados (int id_doctor ){
+        int pacientesSanos  = pacienteRepository.findCountPacienteStatus(id_doctor,1);
+        int pacientesEnfermos  = pacienteRepository.findCountPacienteStatus(id_doctor,2);
+
+        List<Integer[]> valoresGrafica = new ArrayList<>();
+        valoresGrafica.add(new Integer[] {pacientesSanos,pacientesEnfermos});
+
+        return valoresGrafica;
+    }
+
+    public List<Integer[]> graficaContagiadosSexo (int id_doctor){
+        int pacientesMasculino  = pacienteRepository.findCountPacienteSexo(id_doctor,"masculino",2);
+        int pacientesFemenino = pacienteRepository.findCountPacienteSexo(id_doctor,"femenino",2);
+
+        List<Integer[]> valoresGrafica = new ArrayList<>();
+        valoresGrafica.add(new Integer[] {pacientesMasculino,pacientesFemenino});
+
+        return valoresGrafica;
     }
 }

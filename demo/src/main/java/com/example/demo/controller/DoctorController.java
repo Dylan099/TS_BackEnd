@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.bl.DoctorBl;
+import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.PacienteEntity;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,12 @@ import java.util.List;
 @RestController
 public class DoctorController {
     DoctorBl doctorBl;
+    PacienteRepository pacienteRepository;
 
     @Autowired
-    public DoctorController(DoctorBl doctorBl) {
+    public DoctorController(DoctorBl doctorBl, PacienteRepository pacienteRepository) {
         this.doctorBl = doctorBl;
+        this.pacienteRepository = pacienteRepository;
     }
 
 
@@ -39,6 +42,26 @@ public class DoctorController {
         return pacienteDtoList;
     }
 
+    @GetMapping(value = "/graficaContagiados/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Integer[]> graficaContagiados (@PathVariable(value = "idDoctor")int idDoc){
+        return doctorBl.graficaContagiados(idDoc);
+    }
+
+    @GetMapping(value = "/graficaContagiadosSexo/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Integer[]> graficaContagiadosSexo (@PathVariable(value = "idDoctor")int idDoc){
+        return doctorBl.graficaContagiadosSexo(idDoc);
+    }
+
+    @GetMapping(value = "/graficaContagiadosEdad/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Integer[]> graficaContagiadosEdad (@PathVariable(value = "idDoctor")int idDoc){
+        return pacienteRepository.findCountPacienteEdad(idDoc,2);
+    }
+
+
+
     @GetMapping(value = "/listpatientPDF/{idDoctor}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity create_pdf_pacientes_list(@PathVariable(value = "idDoctor")int idDoc) throws IOException, DocumentException {
@@ -47,6 +70,8 @@ public class DoctorController {
         return new ResponseEntity(new DoctorController.Mensaje("Creado"), HttpStatus.ACCEPTED);
 
     }
+
+
 
     public static class Mensaje{
         public String mensaje;
