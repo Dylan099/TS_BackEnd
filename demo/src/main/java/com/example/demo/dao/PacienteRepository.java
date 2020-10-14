@@ -22,7 +22,9 @@ public interface PacienteRepository extends JpaRepository<PacienteEntity,Integer
             nativeQuery = true)
     List<String> findFirstNameByIdDoctor(int id);
 
-    List<PacienteEntity> findAllBySexoEquals(String sexo);
-    List<PacienteEntity> findAllByIdStatus(int status);
-    List<PacienteEntity> findAllByEdadEquals(String edad);
+    List<PacienteEntity> findAllBySexoEqualsAndIdDoctorEquals(String sexo, int id);
+    List<PacienteEntity> findAllByIdStatusAndIdDoctorEquals(int status, int id);
+    List<PacienteEntity> findAllByEdadEqualsAndIdDoctorEquals(String edad, int id);
+    List<PacienteEntity> findAllByFirstNameEqualsAndIdDoctorEquals(String name, int id);
+    List<PacienteEntity> findAllByLastNameEqualsAndIdDoctorEquals(String surname, int id);
 }

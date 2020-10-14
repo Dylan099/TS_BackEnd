@@ -7,8 +7,7 @@ import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,26 +23,27 @@ public class DoctorController {
     }
 
 
-    @RequestMapping("/listaPacientesNombre")
-    public List<String> create_pacientes_list_name() {
+    @GetMapping(value = "/listaPacientesNombre/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> create_pacientes_list_name(@PathVariable(value = "idDoctor")int idDoc) {
         //Recupera los datos de los pacientes del doctor con el id ""
-        List<String> pacientesListName= doctorBl.create_pacientes_list_name(2);
+        List<String> pacientesListName= doctorBl.create_pacientes_list_name(idDoc);
         return pacientesListName;
-
     }
 
-    @RequestMapping("/listpatient")
-    public List<PacienteEntity> create_pacientes_list() {
+    @GetMapping(value = "/listpatient/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<PacienteEntity> create_pacientes_list(@PathVariable(value = "idDoctor")int idDoc) {
         //Recupera los datos de los pacientes del doctor con el id ""
-        List<PacienteEntity> pacienteDtoList= doctorBl.create_pacientes_list(2);
+        List<PacienteEntity> pacienteDtoList= doctorBl.create_pacientes_list(idDoc);
         return pacienteDtoList;
-
     }
 
-    @RequestMapping("/listpatientPDF")
-    public ResponseEntity create_pdf_pacientes_list() throws IOException, DocumentException {
+    @GetMapping(value = "/listpatientPDF/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity create_pdf_pacientes_list(@PathVariable(value = "idDoctor")int idDoc) throws IOException, DocumentException {
         //Recupera los datos de los pacientes del doctor con el id "" y los guarda en un pdf
-        doctorBl.create_pdf_pacientes_list(2);
+        doctorBl.create_pdf_pacientes_list(idDoc);
         return new ResponseEntity(new DoctorController.Mensaje("Creado"), HttpStatus.ACCEPTED);
 
     }

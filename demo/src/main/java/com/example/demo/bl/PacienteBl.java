@@ -22,19 +22,27 @@ public class PacienteBl {
         return pacienteRepository.findPacienteEntityByIdPaciente(id);
     }
 
-    public List<PacienteEntity> findSex(String sex){
+    public List<PacienteEntity> findSex(int idDoc, String sex){
         if(!sex.isEmpty()){
-            return pacienteRepository.findAllBySexoEquals(sex);
+            return pacienteRepository.findAllBySexoEqualsAndIdDoctorEquals(sex,idDoc);
         }else
             System.out.println("ERROR SEARCH BY SEX");
         return null;
     }
 
-    public List<PacienteEntity> findStatus(int status){
-        return pacienteRepository.findAllByIdStatus(status);
+    public List<PacienteEntity> findStatus(int idDoc,int status){
+        return pacienteRepository.findAllByIdStatusAndIdDoctorEquals(status,idDoc);
     }
 
-    public List<PacienteEntity> findAge(String age){
-        return pacienteRepository.findAllByEdadEquals(age);
+    public List<PacienteEntity> findAge(int idDoc, String age){
+        return pacienteRepository.findAllByEdadEqualsAndIdDoctorEquals(age,idDoc);
+    }
+
+    public List<PacienteEntity> findName(int idDoc, String age){
+        return pacienteRepository.findAllByFirstNameEqualsAndIdDoctorEquals(age,idDoc);
+    }
+
+    public List<PacienteEntity> findApellido(int idDoc, String age){
+        return pacienteRepository.findAllByLastNameEqualsAndIdDoctorEquals(age,idDoc);
     }
 }

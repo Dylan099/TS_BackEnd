@@ -23,16 +23,15 @@ public class PacienteConsultaBl {
         this.consultaBl = consultaBl;
     }
 
-    public List<String[]> PacTimeLine(int paciente){
+    public List<ConsultaEntity> PacTimeLine(int paciente){
         List<PacienteConsultaEntity> pacienteConsultaEntities = pacienteConsultaRepository.findAllByIdPaciente(paciente);
         if(pacienteConsultaEntities.isEmpty())
             return null;
-        List<String[]> strings = new ArrayList<>();
+        List<ConsultaEntity> strings = new ArrayList<>();
         for (PacienteConsultaEntity entity: pacienteConsultaEntities
              ) {
             ConsultaEntity consultaEntity= consultaBl.findById(entity.getIdConsulta());
-            PacienteEntity pacienteEntity = pacienteBl.findById(entity.getIdPaciente());
-            strings.add(new String[]{pacienteEntity.getCi(),consultaEntity.getDateConsulta().toString()});
+            strings.add(consultaEntity);
         }
         return strings;
     }
