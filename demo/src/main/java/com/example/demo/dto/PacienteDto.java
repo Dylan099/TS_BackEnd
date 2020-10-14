@@ -5,17 +5,21 @@ public class PacienteDto {
     private String lastName;
     private String ci;
     public String correo;
-    private String lastStatus;
+    private String sexo;
+    private String edad;
+    private int idStatus;
     private int idDoctor;
     private String user;
     private String pass;
 
-    public PacienteDto(String firstName, String lastName, String ci, String correo, String lastStatus, int idDoctor, String user, String pass) {
+    public PacienteDto(String firstName, String lastName, String ci, String correo, String sexo, String edad, int idStatus, int idDoctor, String user, String pass) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.ci = ci;
         this.correo = correo;
-        this.lastStatus = lastStatus;
+        this.sexo = sexo;
+        this.edad = edad;
+        this.idStatus = idStatus;
         this.idDoctor = idDoctor;
         this.user = user;
         this.pass = pass;
@@ -37,10 +41,6 @@ public class PacienteDto {
         return correo;
     }
 
-    public String getLastStatus() {
-        return lastStatus;
-    }
-
     public int getIdDoctor() {
         return idDoctor;
     }
@@ -51,5 +51,17 @@ public class PacienteDto {
 
     public String getPass() {
         return pass;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public String getEdad() {
+        return edad;
+    }
+
+    public int getIdStatus() {
+        return idStatus;
     }
 }

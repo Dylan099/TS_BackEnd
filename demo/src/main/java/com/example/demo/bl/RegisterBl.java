@@ -45,6 +45,8 @@ public class RegisterBl {
         pacienteEntity.setLastName(pacienteDto.getLastName());
         pacienteEntity.setCi(pacienteDto.getCi());
         pacienteEntity.setIdStatus(1);
+        pacienteEntity.setSexo(pacienteDto.getSexo());
+        pacienteEntity.setEdad(pacienteDto.getEdad());
         pacienteEntity.setCorreo(pacienteDto.getCorreo());
         pacienteEntity.setUsername(pacienteDto.getUser());
         pacienteEntity.setPass(pacienteDto.getPass());
