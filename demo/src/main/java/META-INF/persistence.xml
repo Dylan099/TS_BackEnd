@@ -5,6 +5,9 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.example.demo.domain.DoctorEntity</class>
         <class>com.example.demo.domain.PacienteEntity</class>
+        <class>com.example.demo.domain.ConsultaEntity</class>
+        <class>com.example.demo.domain.EstatusEntity</class>
+        <class>com.example.demo.domain.PacienteConsultaEntity</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tds?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>

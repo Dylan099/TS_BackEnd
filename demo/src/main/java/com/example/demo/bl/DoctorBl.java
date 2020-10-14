@@ -106,7 +106,7 @@ public class DoctorBl {
             table.addCell(p.getFirstName());
             table.addCell(p.getLastName());
             table.addCell(p.getCi());
-            table.addCell(p.getLastStatus());
+            table.addCell(p.getIdStatus().toString());
             table.addCell(p.getCorreo());
         }
     }
