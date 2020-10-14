@@ -27,4 +27,5 @@ public interface PacienteRepository extends JpaRepository<PacienteEntity,Integer
     List<PacienteEntity> findAllByEdadEqualsAndIdDoctorEquals(String edad, int id);
     List<PacienteEntity> findAllByFirstNameEqualsAndIdDoctorEquals(String name, int id);
     List<PacienteEntity> findAllByLastNameEqualsAndIdDoctorEquals(String surname, int id);
+    
 }
