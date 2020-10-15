@@ -332,26 +332,26 @@ public class ConsultaEntity {
     @Override
     public String toString() {
         return "Sus sintomas son los siguientes:" +
-                ", Fecha de la consulta:'" + dateConsulta + '\'' +
-                ", Problemas respiratorios:'" + breathingProblem + '\'' +
-                ", Fiebre: '" + fever + '\'' +
-                ", Tos seca:'" + dryCough + '\'' +
-                ", Dolor de garganta:'" + soreThroat + '\'' +
-                ", runningSe='" + runningSe + '\'' +
-                ", Asma='" + asthma + '\'' +
-                ", Enfermedad pulmonar crónica:'" + chronicLungDisease + '\'' +
-                ", Dolor de cabeza:'" + headache + '\'' +
-                ", Enfermedad cardíaca:'" + heartDisease + '\'' +
-                ", Diabetes:'" + diabetes + '\'' +
-                ", Hipertension:'" + hyperTension + '\'' +
-                ", Fatiga'" + fatigue + '\'' +
-                ", Problemas gastrointestinal:'" + gastrointestinal + '\'' +
-                ", Viajes al extranjero:'" + abroadTravel + '\'' +
-                ", Contacto con pacientes de covid:'" + contactWithCovidPatient + '\'' +
-                ", Asistio a alguna reunion:'" + attendedLargeGathering + '\'' +
-                ", Visitó lugares públicos expuestos:'" + visitedPublicExposedPlaces + '\'' +
-                ", familyWorkingInPublicExposedPlaces='" + familyWorkingInPublicExposedPlaces + '\'' +
-                ", wearingMasks='" + wearingMasks + '\'' +
-                ", sanitizationFromMarket='" + sanitizationFromMarket + '\'';
+                "\n Problemas respiratorios: " + breathingProblem +
+                "\n Fiebre: " + fever +
+                "\n Tos seca: " + dryCough +
+                "\n Dolor de garganta: " + soreThroat +
+                "\n Nariz congestionada: " + runningSe +
+                "\n Asma: " + asthma +
+                "\n Enfermedad pulmonar crónica: " + chronicLungDisease +
+                "\n Dolor de cabeza: " + headache +
+                "\n Enfermedad cardíaca: " + heartDisease +
+                "\n Diabetes: " + diabetes +
+                "\n Hipertension: " + hyperTension +
+                "\n Fatiga: " + fatigue +
+                "\n Problemas gastrointestinales: " + gastrointestinal +
+                "\n Viajes al extranjero: " + abroadTravel +
+                "\n Contacto con pacientes de covid: " + contactWithCovidPatient +
+                "\n Asistio a alguna reunion: " + attendedLargeGathering +
+                "\n Visitó lugares públicos: " + visitedPublicExposedPlaces +
+                "\n Su familia trabaja en lugares expuestos: " + familyWorkingInPublicExposedPlaces +
+                "\n Utilizó  barbijo: " + wearingMasks +
+                "\n Utilizó desinfectante: " + sanitizationFromMarket +
+                "\nResultado: Usted "+covid + " tiene Covid-19";
     }
 }

@@ -47,17 +47,18 @@ public class PrediccionBl {
             send_data(socket, sintomasDto);
             answer= recive_data(socket);
             socket.close();
+            guardar_datos(answer, consultaEntity);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        guardar_datos(answer, consultaEntity);
     }
 
     private void guardar_datos(String answer, ConsultaEntity consultaEntity) {
         String[] datos = answer.split("%");
         consultaEntity.setCovid(datos[1]);
         consultaRepository.save(consultaEntity);
+        System.out.println("save");
 
         PacienteConsultaEntity pacienteConsultaEntity = new PacienteConsultaEntity();
         pacienteConsultaEntity.setIdConsulta(consultaEntity.getIdConsulta());
@@ -112,8 +113,10 @@ public class PrediccionBl {
     }
 
 
-    public void create_pdf(AnswerDto answer, ConsultaEntity consultaEntity) throws IOException, DocumentException, URISyntaxException {
+    public void create_pdf(int idPaciente) throws IOException, DocumentException, URISyntaxException {
 
+        List<ConsultaEntity> consultaEntities = resultado_ultima_consulta(idPaciente);
+        ConsultaEntity consultaEntity = consultaEntities.get(0);
 
         Document document = new Document(PageSize.LETTER, 80, 80, 50, 75);
         PdfWriter.getInstance(document, new FileOutputStream("testPDF.pdf"));
@@ -124,8 +127,6 @@ public class PrediccionBl {
         logoP.scaleToFit(500, 400);
         logoP.setAlignment(Paragraph.ALIGN_LEFT);
         document.add(logoP);
-        Image linea = Image.getInstance ("images/linea.png");
-        document.add(linea);
 
 
         Font font = FontFactory.getFont(FontFactory.COURIER, 20, BaseColor.BLACK);
@@ -135,14 +136,9 @@ public class PrediccionBl {
 
         font.setSize(15);
         Paragraph sintomas = new Paragraph(consultaEntity.toString(), font);
-        sintomas.setAlignment(Paragraph.ALIGN_CENTER);
+        sintomas.setAlignment(Paragraph.ALIGN_LEFT);
         document.add(sintomas);
 
-
-        font.setSize(15);
-        Paragraph text = new Paragraph("Con un "+ answer.getR()+" Usted "+answer.getSino()+" tiene Covid-19", font);
-        text.setAlignment(Element.ALIGN_JUSTIFIED);
-        document.add(text);
 
         document.close();
 

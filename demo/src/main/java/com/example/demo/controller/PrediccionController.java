@@ -32,6 +32,7 @@ public class PrediccionController {
         if(bindingResult.hasErrors()){
             return null;
         }
+        System.out.println("......................");
         prediccionBl.answer(consultaEntity);
 
         return new ResponseEntity(new PrediccionController.Mensaje("Bien"), HttpStatus.ACCEPTED);
@@ -41,20 +42,13 @@ public class PrediccionController {
     public List<ConsultaEntity> create_pacientes_list(@PathVariable(value = "idPaciente")int idPaciente) {
 
         List<ConsultaEntity> consultaEntities = prediccionBl.resultado_ultima_consulta(idPaciente);
-        System.out.println("......................"+idPaciente);
 
         return consultaEntities;
     }
 
-    @RequestMapping(value = "/testPDF", method = RequestMethod.POST)
-    public ResponseEntity test_PDF(@RequestBody ConsultaEntity consultaEntity, BindingResult bindingResult) throws DocumentException, IOException, URISyntaxException {
-        if(bindingResult.hasErrors()){
-            return new ResponseEntity(new PrediccionController.Mensaje("Error"), HttpStatus.BAD_REQUEST);
-        }
-        //SintomasDto sintomasDto = new SintomasDto(1,1,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0);
-
-        //AnswerDto answer= prediccionBl.answer(consultaEntity);
-        //prediccionBl.create_pdf(answer,consultaEntity );
+    @RequestMapping(value = "/testPDF/{idPaciente}")
+    public ResponseEntity test_PDF (@PathVariable(value = "idPaciente")int idPaciente) throws DocumentException, IOException, URISyntaxException {
+        prediccionBl.create_pdf(idPaciente);;
         return new ResponseEntity(new PrediccionController.Mensaje("Bien"), HttpStatus.ACCEPTED);
     }
 
