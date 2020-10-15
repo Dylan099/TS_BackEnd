@@ -1,7 +1,11 @@
 package com.example.demo.bl;
 
 import com.example.demo.dao.ConsultaRepository;
+import com.example.demo.dao.PacienteConsultaRepository;
+import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.ConsultaEntity;
+import com.example.demo.domain.PacienteConsultaEntity;
+import com.example.demo.dto.AnswerDto;
 import com.example.demo.dto.SintomasDto;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
@@ -12,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 import com.itextpdf.text.Image;
 
@@ -22,13 +28,16 @@ public class PrediccionBl {
     static final int PUERTO = 500;
 
     private ConsultaRepository consultaRepository;
+    private PacienteRepository pacienteRepository;
+    private PacienteConsultaRepository pacienteConsultaRepository;
 
     @Autowired
-    public PrediccionBl( ConsultaRepository consultaRepository) {
+    public PrediccionBl( ConsultaRepository consultaRepository, PacienteConsultaRepository pacienteConsultaRepository) {
         this.consultaRepository = consultaRepository;
+        this.pacienteConsultaRepository = pacienteConsultaRepository;
     }
 
-    public String answer(ConsultaEntity consultaEntity) {
+    public void answer(ConsultaEntity consultaEntity) {
         Socket socket = null;
         String answer ="";
         SintomasDto sintomasDto = convertir_sintomaDto(consultaEntity);
@@ -39,16 +48,22 @@ public class PrediccionBl {
             answer= recive_data(socket);
             socket.close();
 
-            String[] datos = answer.split("Usted ");
-            datos = datos[1].split("tiene ");
-            consultaEntity.setCovid(datos[0]);
-            consultaRepository.save(consultaEntity);
-            // FALTA GURDAR RESULTADO
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return answer;
+        guardar_datos(answer, consultaEntity);
+    }
+
+    private void guardar_datos(String answer, ConsultaEntity consultaEntity) {
+        String[] datos = answer.split("%");
+        consultaEntity.setCovid(datos[1]);
+        consultaRepository.save(consultaEntity);
+
+        PacienteConsultaEntity pacienteConsultaEntity = new PacienteConsultaEntity();
+        pacienteConsultaEntity.setIdConsulta(consultaEntity.getIdConsulta());
+        pacienteConsultaEntity.setIdPaciente(1);
+        pacienteConsultaRepository.save(pacienteConsultaEntity);
+
     }
 
     public static void send_data(Socket socket, SintomasDto sintomasDto) throws IOException {
@@ -92,12 +107,13 @@ public class PrediccionBl {
         String R = String.valueOf((Float.parseFloat(tokens.nextToken())*100));
 
 
-        String answer = "Con un "+ R + "% Usted "+sino+ " tiene Covid-19";
+        String answer = R + "%"+sino;
         return answer;
     }
 
 
-    public void create_pdf(String answer) throws IOException, DocumentException, URISyntaxException {
+    public void create_pdf(AnswerDto answer, ConsultaEntity consultaEntity) throws IOException, DocumentException, URISyntaxException {
+
 
         Document document = new Document(PageSize.LETTER, 80, 80, 50, 75);
         PdfWriter.getInstance(document, new FileOutputStream("testPDF.pdf"));
@@ -112,16 +128,19 @@ public class PrediccionBl {
         document.add(linea);
 
 
-        BaseFont baseFont = BaseFont.createFont("images/Madina.ttf", BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
-        Font font = new Font(baseFont);
-
-        font.setSize(36);
+        Font font = FontFactory.getFont(FontFactory.COURIER, 20, BaseColor.BLACK);
         Paragraph titulo = new Paragraph("Resultados", font);
         titulo.setAlignment(Paragraph.ALIGN_CENTER);
         document.add(titulo);
 
-        font.setSize(20);
-        Paragraph text = new Paragraph(answer, font);
+        font.setSize(15);
+        Paragraph sintomas = new Paragraph(consultaEntity.toString(), font);
+        sintomas.setAlignment(Paragraph.ALIGN_CENTER);
+        document.add(sintomas);
+
+
+        font.setSize(15);
+        Paragraph text = new Paragraph("Con un "+ answer.getR()+" Usted "+answer.getSino()+" tiene Covid-19", font);
         text.setAlignment(Element.ALIGN_JUSTIFIED);
         document.add(text);
 
@@ -169,5 +188,13 @@ public class PrediccionBl {
         else
             ret = 1;
         return ret;
+    }
+
+    public List<ConsultaEntity> resultado_ultima_consulta(int idPaciente) {
+        int idConsulta = pacienteConsultaRepository.findIdConsutaByIdPaciente(idPaciente);
+        ConsultaEntity consultaEntity = consultaRepository.findConsultaEntityByIdConsulta(idConsulta);
+        List<ConsultaEntity> consultaEntities = new ArrayList<>();
+        consultaEntities.add(consultaEntity);
+        return consultaEntities;
     }
 }

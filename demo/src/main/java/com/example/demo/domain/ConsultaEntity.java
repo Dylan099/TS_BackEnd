@@ -328,4 +328,30 @@ public class ConsultaEntity {
         result = 31 * result + (covid != null ? covid.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Sus sintomas son los siguientes:" +
+                ", Fecha de la consulta:'" + dateConsulta + '\'' +
+                ", Problemas respiratorios:'" + breathingProblem + '\'' +
+                ", Fiebre: '" + fever + '\'' +
+                ", Tos seca:'" + dryCough + '\'' +
+                ", Dolor de garganta:'" + soreThroat + '\'' +
+                ", runningSe='" + runningSe + '\'' +
+                ", Asma='" + asthma + '\'' +
+                ", Enfermedad pulmonar crónica:'" + chronicLungDisease + '\'' +
+                ", Dolor de cabeza:'" + headache + '\'' +
+                ", Enfermedad cardíaca:'" + heartDisease + '\'' +
+                ", Diabetes:'" + diabetes + '\'' +
+                ", Hipertension:'" + hyperTension + '\'' +
+                ", Fatiga'" + fatigue + '\'' +
+                ", Problemas gastrointestinal:'" + gastrointestinal + '\'' +
+                ", Viajes al extranjero:'" + abroadTravel + '\'' +
+                ", Contacto con pacientes de covid:'" + contactWithCovidPatient + '\'' +
+                ", Asistio a alguna reunion:'" + attendedLargeGathering + '\'' +
+                ", Visitó lugares públicos expuestos:'" + visitedPublicExposedPlaces + '\'' +
+                ", familyWorkingInPublicExposedPlaces='" + familyWorkingInPublicExposedPlaces + '\'' +
+                ", wearingMasks='" + wearingMasks + '\'' +
+                ", sanitizationFromMarket='" + sanitizationFromMarket + '\'';
+    }
 }

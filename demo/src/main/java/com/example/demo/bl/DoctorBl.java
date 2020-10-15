@@ -64,7 +64,7 @@ public class DoctorBl {
 
         List<PacienteEntity> pacienteEntityList= pacienteDtoList(id_doctor);
 
-        Document document = new Document();
+        Document document = new Document(PageSize.LETTER, 80, 80, 50, 75);
         PdfWriter.getInstance(document, new FileOutputStream("pacienteList.pdf"));
 
         document.open();
@@ -77,11 +77,13 @@ public class DoctorBl {
         document.add(linea);
 
         Font font = FontFactory.getFont(FontFactory.COURIER, 20, BaseColor.BLACK);
-        Paragraph titulo = new Paragraph("Lista", font);
+        Paragraph titulo = new Paragraph("Lista completa de pacientes \n\n", font);
         titulo.setAlignment(Paragraph.ALIGN_CENTER);
         document.add(titulo);
 
         PdfPTable table = new PdfPTable(5);
+        table.setWidthPercentage(106);
+        table.setHorizontalAlignment(1000);
         addTableHeader(table);
         addRows(table,pacienteEntityList);
 
