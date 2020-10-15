@@ -1,12 +1,13 @@
 package com.example.demo.bl;
 
-import com.example.demo.domain.PacienteEntity;
+import com.example.demo.dao.ConsultaRepository;
+import com.example.demo.domain.ConsultaEntity;
 import com.example.demo.dto.SintomasDto;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import com.itextpdf.text.pdf.TextField;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -20,17 +21,29 @@ public class PrediccionBl {
     static final String HOST = "localhost";
     static final int PUERTO = 500;
 
-    public PrediccionBl() {
+    private ConsultaRepository consultaRepository;
+
+    @Autowired
+    public PrediccionBl( ConsultaRepository consultaRepository) {
+        this.consultaRepository = consultaRepository;
     }
 
-    public String answer(SintomasDto sintomasDto) {
+    public String answer(ConsultaEntity consultaEntity) {
         Socket socket = null;
         String answer ="";
+        SintomasDto sintomasDto = convertir_sintomaDto(consultaEntity);
+
         try {
             socket = new Socket(HOST,PUERTO);
             send_data(socket, sintomasDto);
             answer= recive_data(socket);
             socket.close();
+
+            String[] datos = answer.split("Usted ");
+            datos = datos[1].split("tiene ");
+            consultaEntity.setCovid(datos[0]);
+            consultaRepository.save(consultaEntity);
+            // FALTA GURDAR RESULTADO
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,7 +54,6 @@ public class PrediccionBl {
     public static void send_data(Socket socket, SintomasDto sintomasDto) throws IOException {
         DataOutputStream mensajeSalida = new DataOutputStream(socket.getOutputStream());
         System.out.println("sintomasDto.getBreathingProblem() "+sintomasDto.getBreathingProblem());
-
 
         mensajeSalida.write(sintomasDto.getBreathingProblem());
         mensajeSalida.write(sintomasDto.getFever());
@@ -115,5 +127,47 @@ public class PrediccionBl {
 
         document.close();
 
+    }
+
+    public SintomasDto convertir_sintomaDto(ConsultaEntity consultaEntity) {
+
+        int dateConsulta = convertir_string_int(consultaEntity.getDateConsulta());
+        int breathingProblem = convertir_string_int(consultaEntity.getBreathingProblem());
+        int fever = convertir_string_int(consultaEntity.getFever());
+        int dryCough = convertir_string_int(consultaEntity.getDryCough());
+        int soreThroat = convertir_string_int(consultaEntity.getSoreThroat());
+        int runningSe = convertir_string_int(consultaEntity.getRunningSe());
+        int asthma = convertir_string_int(consultaEntity.getAsthma());
+        int chronicLungDisease = convertir_string_int(consultaEntity.getChronicLungDisease());
+        int headache = convertir_string_int(consultaEntity.getHeadache());
+        int heartDisease = convertir_string_int(consultaEntity.getHeartDisease());
+        int diabetes = convertir_string_int(consultaEntity.getDiabetes());
+        int hyperTension = convertir_string_int(consultaEntity.getHyperTension());
+        int fatigue = convertir_string_int(consultaEntity.getFatigue());
+        int gastrointestinal = convertir_string_int(consultaEntity.getGastrointestinal());
+        int abroadTravel = convertir_string_int(consultaEntity.getAbroadTravel());
+        int contactWithCovidPatient = convertir_string_int(consultaEntity.getContactWithCovidPatient());
+        int attendedLargeGathering = convertir_string_int(consultaEntity.getAttendedLargeGathering());
+        int visitedPublicExposedPlaces = convertir_string_int(consultaEntity.getVisitedPublicExposedPlaces());
+        int familyWorkingInPublicExposedPlaces = convertir_string_int(consultaEntity.getFamilyWorkingInPublicExposedPlaces());
+        int wearingMasks = convertir_string_int(consultaEntity.getWearingMasks());
+        int sanitizationFromMarket = convertir_string_int(consultaEntity.getSanitizationFromMarket());
+
+        SintomasDto sintomasDto =new SintomasDto(breathingProblem,fever,dryCough,soreThroat,runningSe,asthma,chronicLungDisease,headache,heartDisease,diabetes,hyperTension,fatigue,gastrointestinal,abroadTravel,contactWithCovidPatient,attendedLargeGathering,visitedPublicExposedPlaces,familyWorkingInPublicExposedPlaces,wearingMasks, sanitizationFromMarket);
+
+        return sintomasDto;
+
+    }
+
+
+    public int convertir_string_int (String dato){
+        int ret = 0;
+        if (dato==null)
+            return ret;
+        if(dato.equals("no"))
+            ret =0;
+        else
+            ret = 1;
+        return ret;
     }
 }

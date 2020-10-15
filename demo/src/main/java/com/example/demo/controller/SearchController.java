@@ -3,12 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.bl.PacienteBl;
 import com.example.demo.bl.PacienteConsultaBl;
 import com.example.demo.domain.ConsultaEntity;
-import com.example.demo.domain.DoctorEntity;
 import com.example.demo.domain.PacienteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

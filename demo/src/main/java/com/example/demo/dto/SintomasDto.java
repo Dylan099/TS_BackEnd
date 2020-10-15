@@ -204,4 +204,30 @@ public class SintomasDto {
     public void setSanitizationFromMarket(int sanitizationFromMarket) {
         SanitizationFromMarket = sanitizationFromMarket;
     }
+
+    @Override
+    public String toString() {
+        return "SintomasDto{" +
+                "BreathingProblem=" + BreathingProblem +
+                ", Fever=" + Fever +
+                ", DryCough=" + DryCough +
+                ", SoreThroat=" + SoreThroat +
+                ", RunningNose=" + RunningNose +
+                ", Asthma=" + Asthma +
+                ", ChronicLungDisease=" + ChronicLungDisease +
+                ", Headache=" + Headache +
+                ", HeartDisease=" + HeartDisease +
+                ", Diabetes=" + Diabetes +
+                ", HyperTension=" + HyperTension +
+                ", Fatigue=" + Fatigue +
+                ", Gastrointestinal=" + Gastrointestinal +
+                ", AbroadTravel=" + AbroadTravel +
+                ", ContactWithCovidPatient=" + ContactWithCovidPatient +
+                ", AttendedLargeGathering=" + AttendedLargeGathering +
+                ", VisitedPublicExposedPlaces=" + VisitedPublicExposedPlaces +
+                ", FamilyWorkingInPublicExposedPlaces=" + FamilyWorkingInPublicExposedPlaces +
+                ", WearingMasks=" + WearingMasks +
+                ", SanitizationFromMarket=" + SanitizationFromMarket +
+                '}';
+    }
 }

@@ -1,34 +1,33 @@
 package com.example.demo.domain;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 @Entity
 @Table(name = "consulta", schema = "tds", catalog = "")
 public class ConsultaEntity {
     private int idConsulta;
-    private Date dateConsulta;
-    private int breathingProblem;
-    private int fever;
-    private int dryCough;
-    private int soreThroat;
-    private int runningSe;
-    private int asthma;
-    private int chronicLungDisease;
-    private int headache;
-    private int heartDisease;
-    private int diabetes;
-    private int hyperTension;
-    private int fatigue;
-    private int gastrointestinal;
-    private int abroadTravel;
-    private int contactWithCovidPatient;
-    private int attendedLargeGathering;
-    private int visitedPublicExposedPlaces;
-    private int familyWorkingInPublicExposedPlaces;
-    private int wearingMasks;
-    private int sanitizationFromMarket;
-    private int covid;
+    private String dateConsulta;
+    private String breathingProblem;
+    private String fever;
+    private String dryCough;
+    private String soreThroat;
+    private String runningSe;
+    private String asthma;
+    private String chronicLungDisease;
+    private String headache;
+    private String heartDisease;
+    private String diabetes;
+    private String hyperTension;
+    private String fatigue;
+    private String gastrointestinal;
+    private String abroadTravel;
+    private String contactWithCovidPatient;
+    private String attendedLargeGathering;
+    private String visitedPublicExposedPlaces;
+    private String familyWorkingInPublicExposedPlaces;
+    private String wearingMasks;
+    private String sanitizationFromMarket;
+    private String covid;
 
     @Id
     @Column(name = "id_consulta")
@@ -42,221 +41,221 @@ public class ConsultaEntity {
 
     @Basic
     @Column(name = "date_consulta")
-    public Date getDateConsulta() {
+    public String getDateConsulta() {
         return dateConsulta;
     }
 
-    public void setDateConsulta(Date dateConsulta) {
+    public void setDateConsulta(String dateConsulta) {
         this.dateConsulta = dateConsulta;
     }
 
     @Basic
     @Column(name = "breathing_problem")
-    public int getBreathingProblem() {
+    public String getBreathingProblem() {
         return breathingProblem;
     }
 
-    public void setBreathingProblem(int breathingProblem) {
+    public void setBreathingProblem(String breathingProblem) {
         this.breathingProblem = breathingProblem;
     }
 
     @Basic
     @Column(name = "fever")
-    public int getFever() {
+    public String getFever() {
         return fever;
     }
 
-    public void setFever(int fever) {
+    public void setFever(String fever) {
         this.fever = fever;
     }
 
     @Basic
     @Column(name = "dry_cough")
-    public int getDryCough() {
+    public String getDryCough() {
         return dryCough;
     }
 
-    public void setDryCough(int dryCough) {
+    public void setDryCough(String dryCough) {
         this.dryCough = dryCough;
     }
 
     @Basic
     @Column(name = "sore_throat")
-    public int getSoreThroat() {
+    public String getSoreThroat() {
         return soreThroat;
     }
 
-    public void setSoreThroat(int soreThroat) {
+    public void setSoreThroat(String soreThroat) {
         this.soreThroat = soreThroat;
     }
 
     @Basic
     @Column(name = "running_se")
-    public int getRunningSe() {
+    public String getRunningSe() {
         return runningSe;
     }
 
-    public void setRunningSe(int runningSe) {
+    public void setRunningSe(String runningSe) {
         this.runningSe = runningSe;
     }
 
     @Basic
     @Column(name = "asthma")
-    public int getAsthma() {
+    public String getAsthma() {
         return asthma;
     }
 
-    public void setAsthma(int asthma) {
+    public void setAsthma(String asthma) {
         this.asthma = asthma;
     }
 
     @Basic
     @Column(name = "chronic_lung_disease")
-    public int getChronicLungDisease() {
+    public String getChronicLungDisease() {
         return chronicLungDisease;
     }
 
-    public void setChronicLungDisease(int chronicLungDisease) {
+    public void setChronicLungDisease(String chronicLungDisease) {
         this.chronicLungDisease = chronicLungDisease;
     }
 
     @Basic
     @Column(name = "headache")
-    public int getHeadache() {
+    public String getHeadache() {
         return headache;
     }
 
-    public void setHeadache(int headache) {
+    public void setHeadache(String headache) {
         this.headache = headache;
     }
 
     @Basic
     @Column(name = "heart_disease")
-    public int getHeartDisease() {
+    public String getHeartDisease() {
         return heartDisease;
     }
 
-    public void setHeartDisease(int heartDisease) {
+    public void setHeartDisease(String heartDisease) {
         this.heartDisease = heartDisease;
     }
 
     @Basic
     @Column(name = "diabetes")
-    public int getDiabetes() {
+    public String getDiabetes() {
         return diabetes;
     }
 
-    public void setDiabetes(int diabetes) {
+    public void setDiabetes(String diabetes) {
         this.diabetes = diabetes;
     }
 
     @Basic
     @Column(name = "hyper_tension")
-    public int getHyperTension() {
+    public String getHyperTension() {
         return hyperTension;
     }
 
-    public void setHyperTension(int hyperTension) {
+    public void setHyperTension(String hyperTension) {
         this.hyperTension = hyperTension;
     }
 
     @Basic
     @Column(name = "fatigue")
-    public int getFatigue() {
+    public String getFatigue() {
         return fatigue;
     }
 
-    public void setFatigue(int fatigue) {
+    public void setFatigue(String fatigue) {
         this.fatigue = fatigue;
     }
 
     @Basic
     @Column(name = "gastrointestinal")
-    public int getGastrointestinal() {
+    public String getGastrointestinal() {
         return gastrointestinal;
     }
 
-    public void setGastrointestinal(int gastrointestinal) {
+    public void setGastrointestinal(String gastrointestinal) {
         this.gastrointestinal = gastrointestinal;
     }
 
     @Basic
     @Column(name = "abroad_travel")
-    public int getAbroadTravel() {
+    public String getAbroadTravel() {
         return abroadTravel;
     }
 
-    public void setAbroadTravel(int abroadTravel) {
+    public void setAbroadTravel(String abroadTravel) {
         this.abroadTravel = abroadTravel;
     }
 
     @Basic
     @Column(name = "contact_with_covid_patient")
-    public int getContactWithCovidPatient() {
+    public String getContactWithCovidPatient() {
         return contactWithCovidPatient;
     }
 
-    public void setContactWithCovidPatient(int contactWithCovidPatient) {
+    public void setContactWithCovidPatient(String contactWithCovidPatient) {
         this.contactWithCovidPatient = contactWithCovidPatient;
     }
 
     @Basic
     @Column(name = "attended_large_gathering")
-    public int getAttendedLargeGathering() {
+    public String getAttendedLargeGathering() {
         return attendedLargeGathering;
     }
 
-    public void setAttendedLargeGathering(int attendedLargeGathering) {
+    public void setAttendedLargeGathering(String attendedLargeGathering) {
         this.attendedLargeGathering = attendedLargeGathering;
     }
 
     @Basic
     @Column(name = "visited_public_exposed_places")
-    public int getVisitedPublicExposedPlaces() {
+    public String getVisitedPublicExposedPlaces() {
         return visitedPublicExposedPlaces;
     }
 
-    public void setVisitedPublicExposedPlaces(int visitedPublicExposedPlaces) {
+    public void setVisitedPublicExposedPlaces(String visitedPublicExposedPlaces) {
         this.visitedPublicExposedPlaces = visitedPublicExposedPlaces;
     }
 
     @Basic
     @Column(name = "family_working_in_public_exposed_places")
-    public int getFamilyWorkingInPublicExposedPlaces() {
+    public String getFamilyWorkingInPublicExposedPlaces() {
         return familyWorkingInPublicExposedPlaces;
     }
 
-    public void setFamilyWorkingInPublicExposedPlaces(int familyWorkingInPublicExposedPlaces) {
+    public void setFamilyWorkingInPublicExposedPlaces(String familyWorkingInPublicExposedPlaces) {
         this.familyWorkingInPublicExposedPlaces = familyWorkingInPublicExposedPlaces;
     }
 
     @Basic
     @Column(name = "wearing_masks")
-    public int getWearingMasks() {
+    public String getWearingMasks() {
         return wearingMasks;
     }
 
-    public void setWearingMasks(int wearingMasks) {
+    public void setWearingMasks(String wearingMasks) {
         this.wearingMasks = wearingMasks;
     }
 
     @Basic
     @Column(name = "sanitization_from_market")
-    public int getSanitizationFromMarket() {
+    public String getSanitizationFromMarket() {
         return sanitizationFromMarket;
     }
 
-    public void setSanitizationFromMarket(int sanitizationFromMarket) {
+    public void setSanitizationFromMarket(String sanitizationFromMarket) {
         this.sanitizationFromMarket = sanitizationFromMarket;
     }
 
     @Basic
     @Column(name = "covid")
-    public int getCovid() {
+    public String getCovid() {
         return covid;
     }
 
-    public void setCovid(int covid) {
+    public void setCovid(String covid) {
         this.covid = covid;
     }
 
@@ -268,28 +267,36 @@ public class ConsultaEntity {
         ConsultaEntity that = (ConsultaEntity) o;
 
         if (idConsulta != that.idConsulta) return false;
-        if (breathingProblem != that.breathingProblem) return false;
-        if (fever != that.fever) return false;
-        if (dryCough != that.dryCough) return false;
-        if (soreThroat != that.soreThroat) return false;
-        if (runningSe != that.runningSe) return false;
-        if (asthma != that.asthma) return false;
-        if (chronicLungDisease != that.chronicLungDisease) return false;
-        if (headache != that.headache) return false;
-        if (heartDisease != that.heartDisease) return false;
-        if (diabetes != that.diabetes) return false;
-        if (hyperTension != that.hyperTension) return false;
-        if (fatigue != that.fatigue) return false;
-        if (gastrointestinal != that.gastrointestinal) return false;
-        if (abroadTravel != that.abroadTravel) return false;
-        if (contactWithCovidPatient != that.contactWithCovidPatient) return false;
-        if (attendedLargeGathering != that.attendedLargeGathering) return false;
-        if (visitedPublicExposedPlaces != that.visitedPublicExposedPlaces) return false;
-        if (familyWorkingInPublicExposedPlaces != that.familyWorkingInPublicExposedPlaces) return false;
-        if (wearingMasks != that.wearingMasks) return false;
-        if (sanitizationFromMarket != that.sanitizationFromMarket) return false;
-        if (covid != that.covid) return false;
         if (dateConsulta != null ? !dateConsulta.equals(that.dateConsulta) : that.dateConsulta != null) return false;
+        if (breathingProblem != null ? !breathingProblem.equals(that.breathingProblem) : that.breathingProblem != null)
+            return false;
+        if (fever != null ? !fever.equals(that.fever) : that.fever != null) return false;
+        if (dryCough != null ? !dryCough.equals(that.dryCough) : that.dryCough != null) return false;
+        if (soreThroat != null ? !soreThroat.equals(that.soreThroat) : that.soreThroat != null) return false;
+        if (runningSe != null ? !runningSe.equals(that.runningSe) : that.runningSe != null) return false;
+        if (asthma != null ? !asthma.equals(that.asthma) : that.asthma != null) return false;
+        if (chronicLungDisease != null ? !chronicLungDisease.equals(that.chronicLungDisease) : that.chronicLungDisease != null)
+            return false;
+        if (headache != null ? !headache.equals(that.headache) : that.headache != null) return false;
+        if (heartDisease != null ? !heartDisease.equals(that.heartDisease) : that.heartDisease != null) return false;
+        if (diabetes != null ? !diabetes.equals(that.diabetes) : that.diabetes != null) return false;
+        if (hyperTension != null ? !hyperTension.equals(that.hyperTension) : that.hyperTension != null) return false;
+        if (fatigue != null ? !fatigue.equals(that.fatigue) : that.fatigue != null) return false;
+        if (gastrointestinal != null ? !gastrointestinal.equals(that.gastrointestinal) : that.gastrointestinal != null)
+            return false;
+        if (abroadTravel != null ? !abroadTravel.equals(that.abroadTravel) : that.abroadTravel != null) return false;
+        if (contactWithCovidPatient != null ? !contactWithCovidPatient.equals(that.contactWithCovidPatient) : that.contactWithCovidPatient != null)
+            return false;
+        if (attendedLargeGathering != null ? !attendedLargeGathering.equals(that.attendedLargeGathering) : that.attendedLargeGathering != null)
+            return false;
+        if (visitedPublicExposedPlaces != null ? !visitedPublicExposedPlaces.equals(that.visitedPublicExposedPlaces) : that.visitedPublicExposedPlaces != null)
+            return false;
+        if (familyWorkingInPublicExposedPlaces != null ? !familyWorkingInPublicExposedPlaces.equals(that.familyWorkingInPublicExposedPlaces) : that.familyWorkingInPublicExposedPlaces != null)
+            return false;
+        if (wearingMasks != null ? !wearingMasks.equals(that.wearingMasks) : that.wearingMasks != null) return false;
+        if (sanitizationFromMarket != null ? !sanitizationFromMarket.equals(that.sanitizationFromMarket) : that.sanitizationFromMarket != null)
+            return false;
+        if (covid != null ? !covid.equals(that.covid) : that.covid != null) return false;
 
         return true;
     }
@@ -298,27 +305,27 @@ public class ConsultaEntity {
     public int hashCode() {
         int result = idConsulta;
         result = 31 * result + (dateConsulta != null ? dateConsulta.hashCode() : 0);
-        result = 31 * result + breathingProblem;
-        result = 31 * result + fever;
-        result = 31 * result + dryCough;
-        result = 31 * result + soreThroat;
-        result = 31 * result + runningSe;
-        result = 31 * result + asthma;
-        result = 31 * result + chronicLungDisease;
-        result = 31 * result + headache;
-        result = 31 * result + heartDisease;
-        result = 31 * result + diabetes;
-        result = 31 * result + hyperTension;
-        result = 31 * result + fatigue;
-        result = 31 * result + gastrointestinal;
-        result = 31 * result + abroadTravel;
-        result = 31 * result + contactWithCovidPatient;
-        result = 31 * result + attendedLargeGathering;
-        result = 31 * result + visitedPublicExposedPlaces;
-        result = 31 * result + familyWorkingInPublicExposedPlaces;
-        result = 31 * result + wearingMasks;
-        result = 31 * result + sanitizationFromMarket;
-        result = 31 * result + covid;
+        result = 31 * result + (breathingProblem != null ? breathingProblem.hashCode() : 0);
+        result = 31 * result + (fever != null ? fever.hashCode() : 0);
+        result = 31 * result + (dryCough != null ? dryCough.hashCode() : 0);
+        result = 31 * result + (soreThroat != null ? soreThroat.hashCode() : 0);
+        result = 31 * result + (runningSe != null ? runningSe.hashCode() : 0);
+        result = 31 * result + (asthma != null ? asthma.hashCode() : 0);
+        result = 31 * result + (chronicLungDisease != null ? chronicLungDisease.hashCode() : 0);
+        result = 31 * result + (headache != null ? headache.hashCode() : 0);
+        result = 31 * result + (heartDisease != null ? heartDisease.hashCode() : 0);
+        result = 31 * result + (diabetes != null ? diabetes.hashCode() : 0);
+        result = 31 * result + (hyperTension != null ? hyperTension.hashCode() : 0);
+        result = 31 * result + (fatigue != null ? fatigue.hashCode() : 0);
+        result = 31 * result + (gastrointestinal != null ? gastrointestinal.hashCode() : 0);
+        result = 31 * result + (abroadTravel != null ? abroadTravel.hashCode() : 0);
+        result = 31 * result + (contactWithCovidPatient != null ? contactWithCovidPatient.hashCode() : 0);
+        result = 31 * result + (attendedLargeGathering != null ? attendedLargeGathering.hashCode() : 0);
+        result = 31 * result + (visitedPublicExposedPlaces != null ? visitedPublicExposedPlaces.hashCode() : 0);
+        result = 31 * result + (familyWorkingInPublicExposedPlaces != null ? familyWorkingInPublicExposedPlaces.hashCode() : 0);
+        result = 31 * result + (wearingMasks != null ? wearingMasks.hashCode() : 0);
+        result = 31 * result + (sanitizationFromMarket != null ? sanitizationFromMarket.hashCode() : 0);
+        result = 31 * result + (covid != null ? covid.hashCode() : 0);
         return result;
     }
 }

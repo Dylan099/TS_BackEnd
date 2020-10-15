@@ -3,7 +3,6 @@ package com.example.demo.bl;
 import com.example.demo.dao.PacienteConsultaRepository;
 import com.example.demo.domain.ConsultaEntity;
 import com.example.demo.domain.PacienteConsultaEntity;
-import com.example.demo.domain.PacienteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
