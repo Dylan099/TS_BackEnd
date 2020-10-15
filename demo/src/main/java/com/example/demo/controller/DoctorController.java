@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.bl.DoctorBl;
+import com.example.demo.dao.ConsultaRepository;
 import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.PacienteEntity;
 import com.itextpdf.text.DocumentException;
@@ -18,11 +19,13 @@ import java.util.List;
 public class DoctorController {
     DoctorBl doctorBl;
     PacienteRepository pacienteRepository;
+    ConsultaRepository consultaRepository;
 
     @Autowired
-    public DoctorController(DoctorBl doctorBl, PacienteRepository pacienteRepository) {
+    public DoctorController(DoctorBl doctorBl, PacienteRepository pacienteRepository, ConsultaRepository consultaRepository) {
         this.doctorBl = doctorBl;
         this.pacienteRepository = pacienteRepository;
+        this.consultaRepository = consultaRepository;
     }
 
 
@@ -60,6 +63,17 @@ public class DoctorController {
         return pacienteRepository.findCountPacienteEdad(idDoc,2);
     }
 
+    @GetMapping(value = "/graficaContagiadosFecha/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String[]> graficaContagiadosFecha(@PathVariable(value = "idDoctor")int idDoc){
+        return consultaRepository.findCountContagiadosFecha();
+    }
+
+    @GetMapping(value = "/graficaSintomas/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String[]> graficaSintomas(@PathVariable(value = "idDoctor")int idDoc){
+        return consultaRepository.findCountSintomas();
+    }
 
 
     @GetMapping(value = "/listpatientPDF/{idDoctor}")
@@ -70,6 +84,8 @@ public class DoctorController {
         return new ResponseEntity(new DoctorController.Mensaje("Creado"), HttpStatus.ACCEPTED);
 
     }
+
+
 
 
 
