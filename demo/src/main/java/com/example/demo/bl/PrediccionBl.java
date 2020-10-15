@@ -57,8 +57,9 @@ public class PrediccionBl {
     private void guardar_datos(String answer, ConsultaEntity consultaEntity) {
         String[] datos = answer.split("%");
         consultaEntity.setCovid(datos[1]);
+        int idConsulta = consultaRepository.lastConsulta()+1;
+        consultaEntity.setIdConsulta(idConsulta);
         consultaRepository.save(consultaEntity);
-        System.out.println("save");
 
         PacienteConsultaEntity pacienteConsultaEntity = new PacienteConsultaEntity();
         pacienteConsultaEntity.setIdConsulta(consultaEntity.getIdConsulta());

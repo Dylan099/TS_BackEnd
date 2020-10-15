@@ -5,6 +5,7 @@ import com.example.demo.bl.DoctorBl;
 import com.example.demo.dao.ConsultaRepository;
 import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.PacienteEntity;
+import com.example.demo.dto.PacienteDto;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,9 +40,9 @@ public class DoctorController {
 
     @GetMapping(value = "/listpatient/{idDoctor}")
     @ResponseStatus(HttpStatus.OK)
-    public List<PacienteEntity> create_pacientes_list(@PathVariable(value = "idDoctor")int idDoc) {
+    public List<PacienteDto> create_pacientes_list(@PathVariable(value = "idDoctor")int idDoc) {
         //Recupera los datos de los pacientes del doctor con el id ""
-        List<PacienteEntity> pacienteDtoList= doctorBl.create_pacientes_list(idDoc);
+        List<PacienteDto> pacienteDtoList= doctorBl.create_pacientes_list_dto(idDoc);
         return pacienteDtoList;
     }
 

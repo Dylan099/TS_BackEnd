@@ -4,6 +4,7 @@ package com.example.demo.bl;
 
 import com.example.demo.dao.DoctorRepository;
 import com.example.demo.dao.PacienteRepository;
+import com.example.demo.dao.StatusRepository;
 import com.example.demo.domain.PacienteEntity;
 import com.example.demo.dto.PacienteDto;
 import com.itextpdf.text.*;
@@ -26,12 +27,14 @@ import java.util.stream.Stream;
 @Service
 public class DoctorBl {
     private PacienteRepository pacienteRepository;
+    private StatusRepository statusRepository;
     private DoctorRepository doctorRepository;
 
     @Autowired
-    public DoctorBl(PacienteRepository pacienteRepository, DoctorRepository doctorRepository) {
+    public DoctorBl(PacienteRepository pacienteRepository, StatusRepository statusRepository, DoctorRepository doctorRepository) {
 
         this.pacienteRepository = pacienteRepository;
+        this.statusRepository = statusRepository;
         this.doctorRepository = doctorRepository;
     }
 
@@ -47,8 +50,28 @@ public class DoctorBl {
 
     }
 
+    public List<PacienteDto> create_pacientes_list_dto(int id_doctor) {
+        List<PacienteEntity> pacienteEntityList= pacienteDtoList(id_doctor);
+        List<PacienteDto> pacienteDtoList =convertr_entity_dto(pacienteEntityList);
+        return pacienteDtoList;
 
-    public List<String> pacienteNameList(int id_doctor){
+    }
+
+
+    private List<PacienteDto> convertr_entity_dto(List<PacienteEntity> pacienteEntityList) {
+        List<PacienteDto> pacienteDtoList = new ArrayList<>();
+        for (PacienteEntity pacienteEntity: pacienteEntityList) {
+            String status = statusRepository.findByIdStatus(pacienteEntity.getIdStatus()).getEstatus();
+            PacienteDto pacienteDto = new PacienteDto(pacienteEntity.getIdPaciente(), pacienteEntity.getFirstName(), pacienteEntity.getLastName(),pacienteEntity.getCi(),pacienteEntity.getSexo(),pacienteEntity.getEdad(),status,pacienteEntity.getCorreo(),pacienteEntity.getUsername(), pacienteEntity.getPass(), pacienteEntity.getIdDoctor());
+            pacienteDtoList.add(pacienteDto);
+        }
+        return  pacienteDtoList;
+    }
+
+
+
+
+        public List<String> pacienteNameList(int id_doctor){
         List<String> pacienteNameList = pacienteRepository.findFirstNameByIdDoctor(id_doctor);
         return pacienteNameList;
     }

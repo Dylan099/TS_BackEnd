@@ -88,7 +88,7 @@ public class pacienteController {
         if(registerBl.verificarCorreoExistentePaciente(pacienteRequest.getCorreo()))
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
         registerBl.registrarPaciente(new PacienteDto(pacienteRequest.getFirstName(),pacienteRequest.getLastName(),pacienteRequest.getCi(),
-                pacienteRequest.getCorreo(),pacienteRequest.getSexo(),pacienteRequest.getEdad(),1,0,pacienteRequest.getUsername(),pacienteRequest.getPass()));
+                pacienteRequest.getSexo(),pacienteRequest.getEdad(),"1",pacienteRequest.getCorreo(),pacienteRequest.getUsername(),pacienteRequest.getPass()));
         return new ResponseEntity(new Mensaje("Creado"), HttpStatus.CREATED);
     }
 
