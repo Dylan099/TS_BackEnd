@@ -5,6 +5,7 @@ import com.example.demo.dao.PacienteConsultaRepository;
 import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.ConsultaEntity;
 import com.example.demo.domain.PacienteConsultaEntity;
+import com.example.demo.domain.PacienteEntity;
 import com.example.demo.dto.AnswerDto;
 import com.example.demo.dto.SintomasDto;
 import com.itextpdf.text.*;
@@ -32,8 +33,9 @@ public class PrediccionBl {
     private PacienteConsultaRepository pacienteConsultaRepository;
 
     @Autowired
-    public PrediccionBl( ConsultaRepository consultaRepository, PacienteConsultaRepository pacienteConsultaRepository) {
+    public PrediccionBl( ConsultaRepository consultaRepository, PacienteRepository pacienteRepository, PacienteConsultaRepository pacienteConsultaRepository) {
         this.consultaRepository = consultaRepository;
+        this.pacienteRepository = pacienteRepository;
         this.pacienteConsultaRepository = pacienteConsultaRepository;
     }
 
@@ -56,6 +58,10 @@ public class PrediccionBl {
 
     private void guardar_datos(String answer, ConsultaEntity consultaEntity) {
         String[] datos = answer.split("%");
+        int idStatus = 1; //SAnO
+        if(datos[1].equals("si"))
+            idStatus = 2;
+
         consultaEntity.setCovid(datos[1]);
         int idConsulta = consultaRepository.lastConsulta()+1;
         consultaEntity.setIdConsulta(idConsulta);
@@ -65,6 +71,10 @@ public class PrediccionBl {
         pacienteConsultaEntity.setIdConsulta(consultaEntity.getIdConsulta());
         pacienteConsultaEntity.setIdPaciente(1);
         pacienteConsultaRepository.save(pacienteConsultaEntity);
+
+        PacienteEntity pacienteEntity = pacienteRepository.findPacienteEntityByIdPaciente(1);
+        pacienteEntity.setIdStatus(idStatus);
+        pacienteRepository.save(pacienteEntity);
 
     }
 
