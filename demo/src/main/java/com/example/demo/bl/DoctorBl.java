@@ -137,23 +137,26 @@ public class DoctorBl {
         }
     }
 
-    public List<Integer[]> graficaContagiados (int id_doctor ){
+    public int graficaContagiadosValor1 (int id_doctor ){
         int pacientesSanos  = pacienteRepository.findCountPacienteStatus(id_doctor,1);
+        return pacientesSanos;
+    }
+
+    public int graficaContagiadosValor2 (int id_doctor ){
         int pacientesEnfermos  = pacienteRepository.findCountPacienteStatus(id_doctor,2);
-
-        List<Integer[]> valoresGrafica = new ArrayList<>();
-        valoresGrafica.add(new Integer[] {pacientesSanos,pacientesEnfermos});
-
-        return valoresGrafica;
+        return pacientesEnfermos;
     }
 
-    public List<Integer[]> graficaContagiadosSexo (int id_doctor){
+
+    public int graficaContagiadosSexoMasculino (int id_doctor){
         int pacientesMasculino  = pacienteRepository.findCountPacienteSexo(id_doctor,"masculino",2);
-        int pacientesFemenino = pacienteRepository.findCountPacienteSexo(id_doctor,"femenino",2);
-
-        List<Integer[]> valoresGrafica = new ArrayList<>();
-        valoresGrafica.add(new Integer[] {pacientesMasculino,pacientesFemenino});
-
-        return valoresGrafica;
+        return pacientesMasculino;
     }
+
+    public int graficaContagiadosSexoFemenino (int id_doctor){
+        int pacientesFemenino = pacienteRepository.findCountPacienteSexo(id_doctor,"femenino",2);
+        return pacientesFemenino;
+    }
+
+
 }

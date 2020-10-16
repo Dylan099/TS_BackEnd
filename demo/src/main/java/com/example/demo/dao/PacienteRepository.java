@@ -39,10 +39,13 @@ public interface PacienteRepository extends JpaRepository<PacienteEntity,Integer
     int findCountPacienteSexo(int id_doctor,String sexo,int id_status);
 
     @Query(
-            value = "SELECT COUNT(p.id_paciente),p.edad FROM paciente p WHERE p.id_doctor = ? AND p.id_status=? GROUP BY(p.edad)",
+            value = "SELECT COUNT(p.id_paciente)  FROM paciente p WHERE p.id_doctor = ? AND p.id_status=? GROUP BY(p.edad)",
             nativeQuery = true)
-    List<Integer[]> findCountPacienteEdad(int id_doctor,int id_status);
+    int[] findCountPacienteEdad(int id_doctor,int id_status);
 
-
+    @Query(
+            value = "SELECT p.edad FROM paciente p WHERE p.id_doctor = ? AND p.id_status=? GROUP BY(p.edad)",
+            nativeQuery = true)
+    int[] findCountPacienteEdades(int id_doctor,int id_status);
 
 }

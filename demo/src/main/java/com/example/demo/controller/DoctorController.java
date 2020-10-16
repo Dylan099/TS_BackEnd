@@ -46,28 +46,57 @@ public class DoctorController {
         return pacienteDtoList;
     }
 
-    @GetMapping(value = "/graficaContagiados/{idDoctor}")
+    //Grafica de Contagiados (Valor:SANOS)
+    @GetMapping(value = "/graficaContagiados_Valor1/{idDoctor}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Integer[]> graficaContagiados (@PathVariable(value = "idDoctor")int idDoc){
-        return doctorBl.graficaContagiados(idDoc);
+    public int graficaContagiadosValor1 (@PathVariable(value = "idDoctor")int idDoc){
+        return doctorBl.graficaContagiadosValor1(idDoc);
+    }
+    //Grafica de Contagiados (Valor: Contagiados)
+    @GetMapping(value = "/graficaContagiados_Valor2/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public int graficaContagiadosValor2 (@PathVariable(value = "idDoctor")int idDoc){
+        return doctorBl.graficaContagiadosValor2(idDoc);
     }
 
-    @GetMapping(value = "/graficaContagiadosSexo/{idDoctor}")
+    //Grafica de Contagiados por Sexo (VALOR: MASCULINOS)
+    @GetMapping(value = "/graficaContagiadosSexoMasculino/{idDoctor}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Integer[]> graficaContagiadosSexo (@PathVariable(value = "idDoctor")int idDoc){
-        return doctorBl.graficaContagiadosSexo(idDoc);
+    public int graficaContagiadosSexoMasculino (@PathVariable(value = "idDoctor")int idDoc){
+        return doctorBl.graficaContagiadosSexoMasculino(idDoc);
     }
 
-    @GetMapping(value = "/graficaContagiadosEdad/{idDoctor}")
+    //Grafica de Contagiados por Sexo (VALOR: Femeninos)
+    @GetMapping(value = "/graficaContagiadosSexoFemenino/{idDoctor}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Integer[]> graficaContagiadosEdad (@PathVariable(value = "idDoctor")int idDoc){
+    public int graficaContagiadosSexoFemenino (@PathVariable(value = "idDoctor")int idDoc){
+        return doctorBl.graficaContagiadosSexoFemenino(idDoc);
+    }
+
+    //Grafica de Contagiados por Edad(Valor: Contagiados)
+    @GetMapping(value = "/graficaContagiadosEdadValor1/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public int[] graficaContagiadosEdadValor1 (@PathVariable(value = "idDoctor")int idDoc){
+        return pacienteRepository.findCountPacienteEdades(idDoc,2);
+    }
+    //Grafica de Contagiados por Edad(Valor: Edades)
+    @GetMapping(value = "/graficaContagiadosEdadValor2/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public int[] graficaContagiadosEdadValor2 (@PathVariable(value = "idDoctor")int idDoc){
         return pacienteRepository.findCountPacienteEdad(idDoc,2);
     }
 
-    @GetMapping(value = "/graficaContagiadosFecha/{idDoctor}")
+    //Grafica de Contagiados por Edad(Valor: Fechas)
+    @GetMapping(value = "/graficaContagiadosFechaValor1/{idDoctor}")
     @ResponseStatus(HttpStatus.OK)
-    public List<String[]> graficaContagiadosFecha(@PathVariable(value = "idDoctor")int idDoc){
-        return consultaRepository.findCountContagiadosFecha();
+    public String[] graficaContagiadosFechaValor1(@PathVariable(value = "idDoctor")int idDoc){
+        return consultaRepository.findCountContagiadosFechaValor1();
+    }
+    //Grafica de Contagiados por Edad(Valor: Contagiados)
+    @GetMapping(value = "/graficaContagiadosFechaValor2/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public String[] graficaContagiadosFechaValor2(@PathVariable(value = "idDoctor")int idDoc){
+        return consultaRepository.findCountContagiadosFechaValor2();
     }
 
     @GetMapping(value = "/graficaSintomas/{idDoctor}")
@@ -85,10 +114,6 @@ public class DoctorController {
         return new ResponseEntity(new DoctorController.Mensaje("Creado"), HttpStatus.ACCEPTED);
 
     }
-
-
-
-
 
     public static class Mensaje{
         public String mensaje;
