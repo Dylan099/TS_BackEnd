@@ -26,6 +26,7 @@ public class DoctorController {
 
     @RequestMapping("/listaPacientesNombre")
     public List<String> create_pacientes_list_name() {
+        //Recupera los datos de los pacientes del doctor con el id ""
         List<String> pacientesListName= doctorBl.create_pacientes_list_name(2);
         return pacientesListName;
 
@@ -33,6 +34,7 @@ public class DoctorController {
 
     @RequestMapping("/listpatient")
     public List<PacienteEntity> create_pacientes_list() {
+        //Recupera los datos de los pacientes del doctor con el id ""
         List<PacienteEntity> pacienteDtoList= doctorBl.create_pacientes_list(2);
         return pacienteDtoList;
 
