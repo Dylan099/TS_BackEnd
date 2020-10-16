@@ -27,13 +27,12 @@ public class PrediccionController {
     }
 
 
-    @RequestMapping(value = "/sintomasPa", method = RequestMethod.POST)
-    public ResponseEntity testP(@RequestBody ConsultaEntity consultaEntity, BindingResult bindingResult) {
+    @RequestMapping(value = "/sintomasPa/{idPaciente}", method = RequestMethod.POST)
+    public ResponseEntity testP(@RequestBody ConsultaEntity consultaEntity, @PathVariable(value = "idPaciente")int idPaciente, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             return null;
         }
-        System.out.println("......................");
-        prediccionBl.answer(consultaEntity);
+        prediccionBl.answer(consultaEntity, idPaciente);
 
         return new ResponseEntity(new PrediccionController.Mensaje("Bien"), HttpStatus.ACCEPTED);
     }

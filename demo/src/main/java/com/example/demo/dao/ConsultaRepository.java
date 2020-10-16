@@ -28,9 +28,9 @@ public interface ConsultaRepository extends JpaRepository<ConsultaEntity,Integer
     List<String[]> findCountSintomas();
 
 
-    @Query(value = "SELECT p.id_consulta FROM paciente_consulta p ORDER BY p.id_consulta DESC LIMIT 1 ",
+    @Query(value = "SELECT id_consulta FROM consulta ORDER BY id_consulta DESC LIMIT 1 ",
             nativeQuery = true)
-    int lastConsulta();
+    int idLastConsulta();
 
 
 }

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 import com.itextpdf.text.Image;
@@ -39,7 +40,7 @@ public class PrediccionBl {
         this.pacienteConsultaRepository = pacienteConsultaRepository;
     }
 
-    public void answer(ConsultaEntity consultaEntity) {
+    public void answer(ConsultaEntity consultaEntity, int idPaciente) {
         Socket socket = null;
         String answer ="";
         SintomasDto sintomasDto = convertir_sintomaDto(consultaEntity);
@@ -49,30 +50,35 @@ public class PrediccionBl {
             send_data(socket, sintomasDto);
             answer= recive_data(socket);
             socket.close();
-            guardar_datos(answer, consultaEntity);
+            guardar_datos(answer, consultaEntity, idPaciente);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void guardar_datos(String answer, ConsultaEntity consultaEntity) {
+    private void guardar_datos(String answer, ConsultaEntity consultaEntity, int idPaciente) {
         String[] datos = answer.split("%");
         int idStatus = 1; //SAnO
         if(datos[1].equals("si"))
             idStatus = 2;
 
         consultaEntity.setCovid(datos[1]);
-        int idConsulta = consultaRepository.lastConsulta()+1;
+        int idConsulta = consultaRepository.idLastConsulta()+1;
+        System.out.println("id ......................................."+idConsulta);
         consultaEntity.setIdConsulta(idConsulta);
+        Date datess = new Date();
+        String[] dates = datess.toString().split(" ");
+        String date = dates[1];
+        consultaEntity.setDateConsulta(date);
         consultaRepository.save(consultaEntity);
 
         PacienteConsultaEntity pacienteConsultaEntity = new PacienteConsultaEntity();
         pacienteConsultaEntity.setIdConsulta(consultaEntity.getIdConsulta());
-        pacienteConsultaEntity.setIdPaciente(1);
+        pacienteConsultaEntity.setIdPaciente(idPaciente); // Id..................................................................
         pacienteConsultaRepository.save(pacienteConsultaEntity);
 
-        PacienteEntity pacienteEntity = pacienteRepository.findPacienteEntityByIdPaciente(1);
+        PacienteEntity pacienteEntity = pacienteRepository.findPacienteEntityByIdPaciente(idPaciente);
         pacienteEntity.setIdStatus(idStatus);
         pacienteRepository.save(pacienteEntity);
 
