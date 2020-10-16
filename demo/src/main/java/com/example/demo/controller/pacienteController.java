@@ -40,7 +40,7 @@ public class pacienteController {
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
         }
         if(registerBl.checkLogin(doctorRequest.getCorreo(),doctorRequest.getPass(),"doctor"))
-            return new ResponseEntity(new Mensaje("Aceptado"), HttpStatus.ACCEPTED);
+            return new ResponseEntity(doctorRepository.findDoctorEntityByCorreo(doctorRequest.getCorreo()).getIdDoctor(), HttpStatus.ACCEPTED);
         else
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
     }
@@ -51,7 +51,7 @@ public class pacienteController {
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
         }
         if(registerBl.checkLogin(pacienteRequest.getCorreo(),pacienteRequest.getPass(),"paciente"))
-            return new ResponseEntity(new Mensaje("Aceptado"), HttpStatus.ACCEPTED);
+            return new ResponseEntity(pacienteRepository.findPacienteEntityByCorreo(pacienteRequest.getCorreo()).getIdPaciente(), HttpStatus.ACCEPTED);
         else
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
     }
@@ -88,7 +88,7 @@ public class pacienteController {
         if(registerBl.verificarCorreoExistentePaciente(pacienteRequest.getCorreo()))
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
         registerBl.registrarPaciente(new PacienteDto(pacienteRequest.getFirstName(),pacienteRequest.getLastName(),pacienteRequest.getCi(),
-                pacienteRequest.getCorreo(),"Sano",0,pacienteRequest.getUsername(),pacienteRequest.getPass()));
+                pacienteRequest.getSexo(),pacienteRequest.getEdad(),"1",pacienteRequest.getCorreo(),pacienteRequest.getUsername(),pacienteRequest.getPass()));
         return new ResponseEntity(new Mensaje("Creado"), HttpStatus.CREATED);
     }
 

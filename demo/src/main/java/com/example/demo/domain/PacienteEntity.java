@@ -1,7 +1,6 @@
 package com.example.demo.domain;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "paciente", schema = "tds", catalog = "")
@@ -10,7 +9,9 @@ public class PacienteEntity {
     private String firstName;
     private String lastName;
     private String ci;
-    private String lastStatus;
+    private String sexo;
+    private String edad;
+    private Integer idStatus;
     private String correo;
     private String username;
     private String pass;
@@ -57,13 +58,33 @@ public class PacienteEntity {
     }
 
     @Basic
-    @Column(name = "last_status")
-    public String getLastStatus() {
-        return lastStatus;
+    @Column(name = "sexo")
+    public String getSexo() {
+        return sexo;
     }
 
-    public void setLastStatus(String lastStatus) {
-        this.lastStatus = lastStatus;
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    @Basic
+    @Column(name = "edad")
+    public String getEdad() {
+        return edad;
+    }
+
+    public void setEdad(String edad) {
+        this.edad = edad;
+    }
+
+    @Basic
+    @Column(name = "id_status")
+    public Integer getIdStatus() {
+        return idStatus;
+    }
+
+    public void setIdStatus(Integer idStatus) {
+        this.idStatus = idStatus;
     }
 
     @Basic
@@ -96,26 +117,6 @@ public class PacienteEntity {
         this.pass = pass;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PacienteEntity that = (PacienteEntity) o;
-        return idPaciente == that.idPaciente &&
-                Objects.equals(firstName, that.firstName) &&
-                Objects.equals(lastName, that.lastName) &&
-                Objects.equals(ci, that.ci) &&
-                Objects.equals(lastStatus, that.lastStatus) &&
-                Objects.equals(correo, that.correo) &&
-                Objects.equals(username, that.username) &&
-                Objects.equals(pass, that.pass);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idPaciente, firstName, lastName, ci, lastStatus, correo, username, pass);
-    }
-
     @Basic
     @Column(name = "id_doctor")
     public Integer getIdDoctor() {
@@ -124,5 +125,43 @@ public class PacienteEntity {
 
     public void setIdDoctor(Integer idDoctor) {
         this.idDoctor = idDoctor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PacienteEntity that = (PacienteEntity) o;
+
+        if (idPaciente != that.idPaciente) return false;
+        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        if (ci != null ? !ci.equals(that.ci) : that.ci != null) return false;
+        if (sexo != null ? !sexo.equals(that.sexo) : that.sexo != null) return false;
+        if (edad != null ? !edad.equals(that.edad) : that.edad != null) return false;
+        if (idStatus != null ? !idStatus.equals(that.idStatus) : that.idStatus != null) return false;
+        if (correo != null ? !correo.equals(that.correo) : that.correo != null) return false;
+        if (username != null ? !username.equals(that.username) : that.username != null) return false;
+        if (pass != null ? !pass.equals(that.pass) : that.pass != null) return false;
+        if (idDoctor != null ? !idDoctor.equals(that.idDoctor) : that.idDoctor != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = idPaciente;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (ci != null ? ci.hashCode() : 0);
+        result = 31 * result + (sexo != null ? sexo.hashCode() : 0);
+        result = 31 * result + (edad != null ? edad.hashCode() : 0);
+        result = 31 * result + (idStatus != null ? idStatus.hashCode() : 0);
+        result = 31 * result + (correo != null ? correo.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (pass != null ? pass.hashCode() : 0);
+        result = 31 * result + (idDoctor != null ? idDoctor.hashCode() : 0);
+        return result;
     }
 }
