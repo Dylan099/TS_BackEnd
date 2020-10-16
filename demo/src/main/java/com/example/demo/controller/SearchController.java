@@ -64,9 +64,10 @@ public class SearchController {
     }
 
     //TODO: Recibir el id de paciente por consulta
-    @GetMapping(value = "/api/buscar/{idPaciente}")
+    @GetMapping(value = "/api/searchTimeLine/{idPaciente}")
     @ResponseStatus(HttpStatus.OK)
     public List<ConsultaEntity> searchTimeLine(@PathVariable(value = "idPaciente")int id){
-        return pacienteConsultaBl.PacTimeLine(id);
+        List<ConsultaEntity> nreturn = pacienteConsultaBl.PacTimeLine(id);
+        return nreturn;
     }
 }

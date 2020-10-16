@@ -24,8 +24,11 @@ public class PacienteConsultaBl {
 
     public List<ConsultaEntity> PacTimeLine(int paciente){
         List<PacienteConsultaEntity> pacienteConsultaEntities = pacienteConsultaRepository.findAllByIdPaciente(paciente);
-        if(pacienteConsultaEntities.isEmpty())
+        if(pacienteConsultaEntities.isEmpty()){
+            System.out.println("vacio");
             return null;
+        }
+        System.out.println(" no vacio");
         List<ConsultaEntity> strings = new ArrayList<>();
         for (PacienteConsultaEntity entity: pacienteConsultaEntities
              ) {
