@@ -2,6 +2,7 @@ package com.example.demo.bl;
 
 import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.PacienteEntity;
+import com.example.demo.dto.PacienteDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +45,13 @@ public class PacienteBl {
 
     public List<PacienteEntity> findApellido(int idDoc, String age){
         return pacienteRepository.findAllByLastNameEqualsAndIdDoctorEquals(age,idDoc);
+    }
+
+    public PacienteEntity recuperar_datos(int idPaciente) {
+        return  pacienteRepository.findPacienteEntityByIdPaciente(idPaciente);
+    }
+
+    public void actualizar_datos(PacienteEntity pacienteEntity) {
+        pacienteRepository.save(pacienteEntity);
     }
 }
