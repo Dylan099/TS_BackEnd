@@ -5,6 +5,7 @@ package com.example.demo.bl;
 import com.example.demo.dao.DoctorRepository;
 import com.example.demo.dao.PacienteRepository;
 import com.example.demo.dao.StatusRepository;
+import com.example.demo.domain.DoctorEntity;
 import com.example.demo.domain.PacienteEntity;
 import com.example.demo.dto.PacienteDto;
 import com.itextpdf.text.*;
@@ -159,4 +160,11 @@ public class DoctorBl {
     }
 
 
+    public DoctorEntity recuperar_datos(int idDoctor) {
+        return doctorRepository.findDoctorEntityByIdDoctor(idDoctor);
+    }
+
+    public void actualizar_datos(DoctorEntity doctorEntity) {
+        doctorRepository.save(doctorEntity);
+    }
 }

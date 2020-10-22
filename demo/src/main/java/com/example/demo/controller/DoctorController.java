@@ -4,17 +4,21 @@ package com.example.demo.controller;
 import com.example.demo.bl.DoctorBl;
 import com.example.demo.dao.ConsultaRepository;
 import com.example.demo.dao.PacienteRepository;
+import com.example.demo.domain.DoctorEntity;
 import com.example.demo.domain.PacienteEntity;
 import com.example.demo.dto.PacienteDto;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+
+@CrossOrigin(origins = "http://localhost:4200")
 
 @RestController
 public class DoctorController {
@@ -115,10 +119,32 @@ public class DoctorController {
 
     }
 
+
+
+    @GetMapping(value = "/editDoctor/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public DoctorEntity edit_doctor_inicio(@PathVariable(value = "idDoctor")int idDoctor) {
+        //Recupera los datos de los pacientes del doctor con el id ""
+        System.out.println("init>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        DoctorEntity doctorEntity= doctorBl.recuperar_datos(idDoctor);
+        return doctorEntity;
+    }
+
+    @PutMapping(value = "/editDoctor/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity edit_doctor(@RequestBody DoctorEntity doctorEntity, BindingResult bindingResult) {
+        //Recupera los datos de los pacientes del doctor con el id ""
+        System.out.println("edit>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        doctorBl.actualizar_datos(doctorEntity);
+        return new ResponseEntity(new DoctorController.Mensaje("Bien"), HttpStatus.ACCEPTED);
+    }
+
     public static class Mensaje{
         public String mensaje;
         public Mensaje(String mensaje){
             this.mensaje = mensaje;
         }
     }
+
+
 }
