@@ -4,10 +4,12 @@ import com.example.demo.bl.PacienteBl;
 import com.example.demo.bl.PacienteConsultaBl;
 import com.example.demo.domain.ConsultaEntity;
 import com.example.demo.domain.PacienteEntity;
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -70,4 +72,14 @@ public class SearchController {
         List<ConsultaEntity> nreturn = pacienteConsultaBl.PacTimeLine(id);
         return nreturn;
     }
+
+    @GetMapping(value = "/api/searchTimeLinePDF/{idPaciente}")
+    @ResponseStatus(HttpStatus.OK)
+    public String PacTimeLinePDF(@PathVariable(value = "idPaciente")int id) throws IOException, DocumentException {
+       System.out.println("aaaaaaaaaaaaaaaa");
+        pacienteConsultaBl.pacTimeLinePDF(id);
+        String ruta = "ruta";
+        return ruta;
+    }
+
 }

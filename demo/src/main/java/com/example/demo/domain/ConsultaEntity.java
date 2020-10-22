@@ -354,4 +354,7 @@ public class ConsultaEntity {
                 "\n Utilizó desinfectante: " + sanitizationFromMarket +
                 "\nResultado: Usted "+covid + " tiene Covid-19";
     }
+
+
+
 }
