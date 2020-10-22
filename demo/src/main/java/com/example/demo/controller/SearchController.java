@@ -49,7 +49,7 @@ public class SearchController {
 
     @GetMapping(value = "/api/buscarEdad/{idDoctor}/{edad}")
     @ResponseStatus(HttpStatus.OK)
-    public List<PacienteEntity> searchAge(@PathVariable(value = "idDoctor")int idDoc,@PathVariable(value = "edad")String idPac){
+    public List<PacienteEntity> searchAge(@PathVariable(value = "idDoctor")int idDoc, @PathVariable(value = "edad")String idPac){
         return pacienteBl.findAge(idDoc,idPac);
     }
 

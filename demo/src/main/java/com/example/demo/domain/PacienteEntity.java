@@ -16,6 +16,7 @@ public class PacienteEntity {
     private String username;
     private String pass;
     private Integer idDoctor;
+    private Integer estatus;
 
     @Id
     @Column(name = "id_paciente")
@@ -127,6 +128,16 @@ public class PacienteEntity {
         this.idDoctor = idDoctor;
     }
 
+    @Basic
+    @Column(name = "estatus")
+    public Integer getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(Integer estatus) {
+        this.estatus = estatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -145,6 +156,7 @@ public class PacienteEntity {
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
         if (pass != null ? !pass.equals(that.pass) : that.pass != null) return false;
         if (idDoctor != null ? !idDoctor.equals(that.idDoctor) : that.idDoctor != null) return false;
+        if (estatus != null ? !estatus.equals(that.estatus) : that.estatus != null) return false;
 
         return true;
     }
@@ -162,6 +174,7 @@ public class PacienteEntity {
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (pass != null ? pass.hashCode() : 0);
         result = 31 * result + (idDoctor != null ? idDoctor.hashCode() : 0);
+        result = 31 * result + (estatus != null ? estatus.hashCode() : 0);
         return result;
     }
 }

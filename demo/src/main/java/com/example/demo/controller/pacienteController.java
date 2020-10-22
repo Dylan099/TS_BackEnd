@@ -13,14 +13,8 @@ import com.example.demo.dto.SuscripcionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-
-import java.security.AccessControlException;
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -109,10 +103,19 @@ public class pacienteController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity edit_paciente(@RequestBody PacienteEntity pacienteEntity, @PathVariable(value = "idPaciente")int idPaciente, BindingResult bindingResult) {
         //Recupera los datos de los pacientes del doctor con el id ""
-        System.out.println("edit>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         pacienteBl.actualizar_datos(pacienteEntity);
         return new ResponseEntity(new pacienteController.Mensaje("Bien"), HttpStatus.ACCEPTED);
     }
+
+    @PutMapping(value = "/editPatient/deletePatient/{idPaciente}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity delete_paciente(@RequestBody PacienteEntity pacienteEntity, @PathVariable(value = "idPaciente")int idPaciente, BindingResult bindingResult) {
+        //Recupera los datos de los pacientes del doctor con el id ""
+        System.out.println("delete>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        pacienteBl.delete_paciente(pacienteEntity);
+        return new ResponseEntity(new pacienteController.Mensaje("Bien"), HttpStatus.ACCEPTED);
+    }
+
 
     public static class Mensaje{
         public String mensaje;

@@ -6,10 +6,8 @@ import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.ConsultaEntity;
 import com.example.demo.domain.PacienteConsultaEntity;
 import com.example.demo.domain.PacienteEntity;
-import com.example.demo.dto.AnswerDto;
 import com.example.demo.dto.SintomasDto;
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import org.springframework.beans.factory.annotation.Autowired;

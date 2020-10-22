@@ -7,9 +7,9 @@ import com.example.demo.dao.PacienteRepository;
 import com.example.demo.dao.StatusRepository;
 import com.example.demo.domain.DoctorEntity;
 import com.example.demo.domain.PacienteEntity;
+import com.example.demo.dto.Estatus;
 import com.example.demo.dto.PacienteDto;
 import com.itextpdf.text.*;
-import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -18,7 +18,6 @@ import com.itextpdf.text.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ public class DoctorBl {
 
 
     public List<PacienteEntity> pacienteDtoList(int idDoctor){
-        List<PacienteEntity> pacienteEntityList = pacienteRepository.findAllByIdDoctor(idDoctor);
+        List<PacienteEntity> pacienteEntityList = pacienteRepository.findAllByIdDoctorAndEstatus(idDoctor, Estatus.ACTIVE.getStatus());
         return pacienteEntityList;
     }
 
@@ -165,6 +164,12 @@ public class DoctorBl {
     }
 
     public void actualizar_datos(DoctorEntity doctorEntity) {
+        doctorRepository.save(doctorEntity);
+    }
+
+
+    public void delete_paciente(DoctorEntity doctorEntity) {
+        doctorEntity.setEstatus(Estatus.INACTIVE.getStatus());
         doctorRepository.save(doctorEntity);
     }
 }

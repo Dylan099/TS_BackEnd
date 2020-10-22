@@ -2,7 +2,7 @@ package com.example.demo.bl;
 
 import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.PacienteEntity;
-import com.example.demo.dto.PacienteDto;
+import com.example.demo.dto.Estatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +52,11 @@ public class PacienteBl {
     }
 
     public void actualizar_datos(PacienteEntity pacienteEntity) {
+        pacienteRepository.save(pacienteEntity);
+    }
+
+    public void delete_paciente(PacienteEntity pacienteEntity) {
+        pacienteEntity.setEstatus(Estatus.INACTIVE.getStatus());
         pacienteRepository.save(pacienteEntity);
     }
 }

@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -125,7 +124,6 @@ public class DoctorController {
     @ResponseStatus(HttpStatus.OK)
     public DoctorEntity edit_doctor_inicio(@PathVariable(value = "idDoctor")int idDoctor) {
         //Recupera los datos de los pacientes del doctor con el id ""
-        System.out.println("init>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         DoctorEntity doctorEntity= doctorBl.recuperar_datos(idDoctor);
         return doctorEntity;
     }
@@ -134,8 +132,15 @@ public class DoctorController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity edit_doctor(@RequestBody DoctorEntity doctorEntity, BindingResult bindingResult) {
         //Recupera los datos de los pacientes del doctor con el id ""
-        System.out.println("edit>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         doctorBl.actualizar_datos(doctorEntity);
+        return new ResponseEntity(new DoctorController.Mensaje("Bien"), HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping(value = "/editDoctor/deleteDoctor/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity delete_paciente(@RequestBody DoctorEntity doctorEntity, @PathVariable(value = "idDoctor")int idDoctor, BindingResult bindingResult) {
+        //Recupera los datos de los pacientes del doctor con el id ""
+        doctorBl.delete_paciente(doctorEntity);
         return new ResponseEntity(new DoctorController.Mensaje("Bien"), HttpStatus.ACCEPTED);
     }
 

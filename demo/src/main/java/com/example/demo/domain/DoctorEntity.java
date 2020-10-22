@@ -13,6 +13,7 @@ public class DoctorEntity {
     private String correo;
     private String username;
     private String pass;
+    private int estatus;
 
     @Id
     @Column(name = "id_doctor")
@@ -84,6 +85,17 @@ public class DoctorEntity {
         this.pass = pass;
     }
 
+    @Basic
+    @Column(name = "estatus")
+    public int getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(int estatus) {
+        this.estatus = estatus;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,11 +107,13 @@ public class DoctorEntity {
                 Objects.equals(ci, that.ci) &&
                 Objects.equals(correo, that.correo) &&
                 Objects.equals(username, that.username) &&
-                Objects.equals(pass, that.pass);
+                Objects.equals(pass, that.pass) &&
+                Objects.equals(estatus, that.estatus);
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idDoctor, firstName, lastName, ci, correo, username, pass);
+        return Objects.hash(idDoctor, firstName, lastName, ci, correo, username, pass, estatus);
     }
 }

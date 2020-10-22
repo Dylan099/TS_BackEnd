@@ -13,9 +13,11 @@ public interface PacienteRepository extends JpaRepository<PacienteEntity,Integer
 
     PacienteEntity findPacienteEntityByIdPaciente(int id);
 
-    List<PacienteEntity> findAllByIdDoctor(int id);
+    List<PacienteEntity> findAllByIdDoctorAndEstatus(int id, int estatus);
 
     PacienteEntity findPacienteEntityByCorreo(String correo);
+
+    PacienteEntity findPacienteEntityByCorreoAndEstatus(String correo, int estatus);
 
     @Query(
             value = "SELECT p.first_name FROM paciente p WHERE p.id_doctor = ?1",

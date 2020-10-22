@@ -3,8 +3,6 @@ package com.example.demo.controller;
 
 import com.example.demo.bl.PrediccionBl;
 import com.example.demo.domain.ConsultaEntity;
-import com.example.demo.domain.PacienteEntity;
-import com.example.demo.dto.AnswerDto;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

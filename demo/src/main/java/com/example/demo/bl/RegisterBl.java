@@ -5,6 +5,7 @@ import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.DoctorEntity;
 import com.example.demo.domain.PacienteEntity;
 import com.example.demo.dto.DoctorDto;
+import com.example.demo.dto.Estatus;
 import com.example.demo.dto.PacienteDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,11 +27,11 @@ public class RegisterBl {
         System.out.println("USERNAME: "+ user);
         try{
             if(tipo.equals("doctor")){
-                DoctorEntity dc = doctorRepository.findDoctorEntityByCorreo(user);
+                DoctorEntity dc = doctorRepository.findDoctorEntityByCorreoAndEstatus(user, Estatus.ACTIVE.getStatus());
                 System.out.println("Encontrado" + pass);
                 return dc.getPass().equals(pass);
             }else if(tipo.equals("paciente")){
-                PacienteEntity pc = pacienteRepository.findPacienteEntityByCorreo(user);
+                PacienteEntity pc = pacienteRepository.findPacienteEntityByCorreoAndEstatus(user, Estatus.ACTIVE.getStatus());
                 return pc.getPass().equals(pass);
             }
             return false;
@@ -51,6 +52,7 @@ public class RegisterBl {
         pacienteEntity.setUsername(pacienteDto.getUsername());
         pacienteEntity.setPass(pacienteDto.getPass());
         pacienteEntity.setIdDoctor(null);
+        pacienteEntity.setEstatus(Estatus.ACTIVE.getStatus());
         pacienteRepository.save(pacienteEntity);
     }
 
@@ -62,6 +64,7 @@ public class RegisterBl {
         doctorEntity.setCorreo(doctorDto.getCorreo());
         doctorEntity.setUsername(doctorDto.getUser());
         doctorEntity.setPass(doctorDto.getPass());
+        doctorEntity.setEstatus(Estatus.ACTIVE.getStatus());
         doctorRepository.save(doctorEntity);
     }
 
@@ -82,13 +85,13 @@ public class RegisterBl {
     }
 
     public boolean verificarCorreoExistentePaciente(String correo){
-        PacienteEntity pacienteEntity= pacienteRepository.findPacienteEntityByCorreo(correo);
+        PacienteEntity pacienteEntity= pacienteRepository.findPacienteEntityByCorreoAndEstatus(correo, Estatus.ACTIVE.getStatus());
         List<PacienteEntity> pacienteEntityList = pacienteRepository.findAll();
         return pacienteEntityList.contains(pacienteEntity);
     }
 
     public boolean verificarCorreoExistenteDoctor(String correo){
-        DoctorEntity doctorEntity = doctorRepository.findDoctorEntityByCorreo(correo);
+        DoctorEntity doctorEntity = doctorRepository.findDoctorEntityByCorreoAndEstatus(correo, Estatus.ACTIVE.getStatus());
         List<DoctorEntity> doctorEntityList = doctorRepository.findAll();
         return doctorEntityList.contains(doctorEntity);
     }
