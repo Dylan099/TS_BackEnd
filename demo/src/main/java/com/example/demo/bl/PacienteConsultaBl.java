@@ -10,6 +10,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,11 +47,13 @@ public class PacienteConsultaBl {
         return strings;
     }
 
-    public void pacTimeLinePDF(int idPaciente) throws IOException, DocumentException {
+    public ByteArrayInputStream pacTimeLinePDF(int idPaciente) throws IOException, DocumentException {
         List<ConsultaEntity> consultaEntityList = PacTimeLine(idPaciente);
 
         Document document = new Document(PageSize.LETTER, 80, 80, 50, 75);
-        PdfWriter.getInstance(document, new FileOutputStream("paciente.pdf"));
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        PdfWriter.getInstance(document, out);
 
         document.open();
 
@@ -61,18 +65,19 @@ public class PacienteConsultaBl {
         document.add(linea);
 
         Font font = FontFactory.getFont(FontFactory.COURIER, 20, BaseColor.BLACK);
-        Paragraph titulo = new Paragraph("Lista de sintomas del paciente \n\n", font);
+        Paragraph titulo = new Paragraph("Lista de sintomas en el tiempo del paciente \n\n", font);
         titulo.setAlignment(Paragraph.ALIGN_CENTER);
         document.add(titulo);
 
         if(consultaEntityList!=null)
         {
-            PdfPTable table = new PdfPTable(5);
+            PdfPTable table = new PdfPTable(22);
             table.setWidthPercentage(106);
             table.setHorizontalAlignment(1000);
             addTableHeader(table);
             addRows(table,consultaEntityList);
             document.add(table);
+            document.add(orden());
         }
         else
         {
@@ -83,32 +88,54 @@ public class PacienteConsultaBl {
         }
         document.close();
 
+        return new ByteArrayInputStream(out.toByteArray());
+
+    }
+
+    private Element orden() {
+        Font font = FontFactory.getFont(FontFactory.COURIER, 12, BaseColor.BLACK);
+        Paragraph orden = new Paragraph("Nota: los datos estan en el siguiente orden \n" +
+                "Fecha de la consulta,\n" +
+                "Problema de respiración,\n" +
+                "Fiebre,\n" +
+                "dryCough,\n" +
+                "soreThroat,\n" +
+                "Problemas respiratorios,\n" +
+                "Asma,\n" +
+                "ChronicLungDisease,\n" +
+                "Dolor de cabeza,\n" +
+                "heartDisease,\n" +
+                "Diabetes,\n" +
+                "Hipertensión,\n" +
+                "Fatiga,\n" +
+                "Problemas gastrointestinales,\n" +
+                "Viajes al extranjero,\n" +
+                "contac,\n" +
+                "wentLargeGathering,\n" +
+                "VisitPublicExposedPlaces,\n" +
+                "familyWorkingInPublicExposedPlaces,\n" +
+                "vistiendoMáscaras,\n" +
+                "sanitizationFromMarket,\n" +
+                "Tiene covid", font);
+        orden.setAlignment(Paragraph.ALIGN_LEFT);
+
+        return orden;
+
     }
 
 
     private void addTableHeader(PdfPTable table) {
-        Stream.of("dateConsulta",
-                "Problema de respiración",
-                "fiebre",
-                "dryCough",
-                "soreThroat",
-                "Problemas respiratorios",
-                "asma",
-                "ChronicLungDisease",
-                "dolor de cabeza",
-                "heartDisease",
-                "diabetes",
-                "hipertensión",
-                "fatiga",
-                "gastrointestinal",
-                "viajes al extranjero",
-                "contac",
-                "wentLargeGathering",
-                "VisitPublicExposedPlaces",
-                "familyWorkingInPublicExposedPlaces",
-                "vistiendoMáscaras",
-                "sanitizationFromMarket",
-                "covid")
+        Stream.of("D1","D2",
+                "D3", "D4",
+                "D5", "D6",
+                "D7", "D8",
+                "D9", "D10",
+                "D11","D12",
+                "D13","D14",
+                "D15","D16",
+                "D17","D18",
+                "D19","D20",
+                "D21","D22")
                 .forEach(columnTitle -> {
                     PdfPCell header = new PdfPCell();
                     header.setBackgroundColor(BaseColor.LIGHT_GRAY);

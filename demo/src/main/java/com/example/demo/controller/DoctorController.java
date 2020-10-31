@@ -9,11 +9,15 @@ import com.example.demo.domain.PacienteEntity;
 import com.example.demo.dto.PacienteDto;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -113,8 +117,10 @@ public class DoctorController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity create_pdf_pacientes_list(@PathVariable(value = "idDoctor")int idDoc) throws IOException, DocumentException {
         //Recupera los datos de los pacientes del doctor con el id "" y los guarda en un pdf
-        doctorBl.create_pdf_pacientes_list(idDoc);
-        return new ResponseEntity(new DoctorController.Mensaje("Creado"), HttpStatus.ACCEPTED);
+        ByteArrayInputStream bais = doctorBl.create_pdf_pacientes_list(idDoc);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline: filename = lista.pdf");
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(bais));
 
     }
 

@@ -128,13 +128,14 @@ public class PrediccionBl {
     }
 
 
-    public void create_pdf(int idPaciente) throws IOException, DocumentException, URISyntaxException {
+    public ByteArrayInputStream create_pdf(int idPaciente) throws IOException, DocumentException, URISyntaxException {
 
         List<ConsultaEntity> consultaEntities = resultado_ultima_consulta(idPaciente);
         ConsultaEntity consultaEntity = consultaEntities.get(0);
 
         Document document = new Document(PageSize.LETTER, 80, 80, 50, 75);
-        PdfWriter.getInstance(document, new FileOutputStream("testPDF.pdf"));
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PdfWriter.getInstance(document, out);
         document.open();
 
 
@@ -156,6 +157,9 @@ public class PrediccionBl {
 
 
         document.close();
+
+        return new ByteArrayInputStream(out.toByteArray());
+
 
     }
 

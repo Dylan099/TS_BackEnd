@@ -6,9 +6,14 @@ import com.example.demo.domain.ConsultaEntity;
 import com.example.demo.domain.PacienteEntity;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -75,11 +80,24 @@ public class SearchController {
 
     @GetMapping(value = "/api/searchTimeLinePDF/{idPaciente}")
     @ResponseStatus(HttpStatus.OK)
-    public String PacTimeLinePDF(@PathVariable(value = "idPaciente")int id) throws IOException, DocumentException {
-       System.out.println("aaaaaaaaaaaaaaaa");
-        pacienteConsultaBl.pacTimeLinePDF(id);
-        String ruta = "ruta";
-        return ruta;
+    public ResponseEntity PacTimeLinePDF(@PathVariable(value = "idPaciente")int id) throws IOException, DocumentException {
+
+        ByteArrayInputStream bais =pacienteConsultaBl.pacTimeLinePDF(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline: filename = sintomas_paciente.pdf");
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(bais));
+
+    }
+
+
+
+
+
+    public static class Mensaje{
+        public String mensaje;
+        public Mensaje(String mensaje){
+            this.mensaje = mensaje;
+        }
     }
 
 }

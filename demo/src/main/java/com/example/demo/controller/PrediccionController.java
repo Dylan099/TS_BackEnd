@@ -5,11 +5,15 @@ import com.example.demo.bl.PrediccionBl;
 import com.example.demo.domain.ConsultaEntity;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -45,12 +49,18 @@ public class PrediccionController {
 
     @RequestMapping(value = "/testPDF/{idPaciente}")
     public ResponseEntity test_PDF (@PathVariable(value = "idPaciente")int idPaciente) throws DocumentException, IOException, URISyntaxException {
-        prediccionBl.create_pdf(idPaciente);;
-        return new ResponseEntity(new PrediccionController.Mensaje("Bien"), HttpStatus.ACCEPTED);
+        ByteArrayInputStream bais =prediccionBl.create_pdf(idPaciente);;
+        HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Disposition", "inline: filename = prediccion.pdf");
+            return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(bais));
+
     }
 
 
-    public class Mensaje {
+
+
+
+public class Mensaje {
         public String mensaje;
         public Mensaje(String mensaje){
             this.mensaje = mensaje;

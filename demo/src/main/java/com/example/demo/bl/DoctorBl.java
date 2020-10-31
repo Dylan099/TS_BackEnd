@@ -18,6 +18,8 @@ import com.itextpdf.text.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,12 +85,13 @@ public class DoctorBl {
     }
 
 
-    public void create_pdf_pacientes_list(int id_doctor) throws IOException, DocumentException {
+    public ByteArrayInputStream create_pdf_pacientes_list(int id_doctor) throws IOException, DocumentException {
 
         List<PacienteEntity> pacienteEntityList= pacienteDtoList(id_doctor);
 
         Document document = new Document(PageSize.LETTER, 80, 80, 50, 75);
-        PdfWriter.getInstance(document, new FileOutputStream("pacienteList.pdf"));
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PdfWriter.getInstance(document, out);
 
         document.open();
 
@@ -112,6 +115,8 @@ public class DoctorBl {
 
         document.add(table);
         document.close();
+
+        return new ByteArrayInputStream(out.toByteArray());
 
     }
 
