@@ -5,7 +5,6 @@ import com.example.demo.bl.DoctorBl;
 import com.example.demo.dao.ConsultaRepository;
 import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.DoctorEntity;
-import com.example.demo.domain.PacienteEntity;
 import com.example.demo.dto.PacienteDto;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;

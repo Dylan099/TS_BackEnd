@@ -16,7 +16,8 @@ public class PacienteEntity {
     private String username;
     private String pass;
     private Integer idDoctor;
-    private Integer estatus;
+    private int numRecomendacion;
+    private int estatus;
 
     @Id
     @Column(name = "id_paciente")
@@ -129,12 +130,22 @@ public class PacienteEntity {
     }
 
     @Basic
+    @Column(name = "num_recomendacion")
+    public int getNumRecomendacion() {
+        return numRecomendacion;
+    }
+
+    public void setNumRecomendacion(int numRecomendacion) {
+        this.numRecomendacion = numRecomendacion;
+    }
+
+    @Basic
     @Column(name = "estatus")
-    public Integer getEstatus() {
+    public int getEstatus() {
         return estatus;
     }
 
-    public void setEstatus(Integer estatus) {
+    public void setEstatus(int estatus) {
         this.estatus = estatus;
     }
 
@@ -146,6 +157,8 @@ public class PacienteEntity {
         PacienteEntity that = (PacienteEntity) o;
 
         if (idPaciente != that.idPaciente) return false;
+        if (numRecomendacion != that.numRecomendacion) return false;
+        if (estatus != that.estatus) return false;
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
         if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
         if (ci != null ? !ci.equals(that.ci) : that.ci != null) return false;
@@ -156,7 +169,6 @@ public class PacienteEntity {
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
         if (pass != null ? !pass.equals(that.pass) : that.pass != null) return false;
         if (idDoctor != null ? !idDoctor.equals(that.idDoctor) : that.idDoctor != null) return false;
-        if (estatus != null ? !estatus.equals(that.estatus) : that.estatus != null) return false;
 
         return true;
     }
@@ -174,7 +186,8 @@ public class PacienteEntity {
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (pass != null ? pass.hashCode() : 0);
         result = 31 * result + (idDoctor != null ? idDoctor.hashCode() : 0);
-        result = 31 * result + (estatus != null ? estatus.hashCode() : 0);
+        result = 31 * result + numRecomendacion;
+        result = 31 * result + estatus;
         return result;
     }
 }

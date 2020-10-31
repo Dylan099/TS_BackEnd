@@ -10,6 +10,13 @@ import java.util.List;
 @Repository
 public interface PacienteRepository extends JpaRepository<PacienteEntity,Integer> {
     PacienteEntity findPacienteEntityByUsername(String user);
+    PacienteEntity findByIdPaciente(int id);
+
+    @Query(
+            value = "SELECT p.num_recomendacion FROM paciente p WHERE p.id_paciente = ? ",
+            nativeQuery = true)
+    int findCountNumRecomendacion(int id_paciente);
+
 
     PacienteEntity findPacienteEntityByIdPaciente(int id);
 
