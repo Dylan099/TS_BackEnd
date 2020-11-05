@@ -1,5 +1,4 @@
 
-
 --
 -- Base de datos: `tds`
 --
@@ -6302,7 +6301,10 @@ CREATE TABLE `doctor` (
   `correo` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
   `pass` varchar(100) NOT NULL,
-  `estatus` int(1) NOT NULL DEFAULT 1
+  `estatus` int(1) NOT NULL DEFAULT 1,
+  `doble_auth` int(1) NOT NULL DEFAULT 0,
+  `tel_num` varchar(100) NOT NULL,
+  `last_cod` varchar(100)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -6450,7 +6452,8 @@ CREATE TABLE `paciente` (
   `pass` varchar(100) NOT NULL,
   `id_doctor` int(6) UNSIGNED DEFAULT NULL,
   `num_recomendacion` int(11) NOT NULL DEFAULT 0,
-  `estatus` int(1) NOT NULL DEFAULT 1
+  `estatus` int(1) NOT NULL DEFAULT 1,
+  `last_code` varchar(100)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

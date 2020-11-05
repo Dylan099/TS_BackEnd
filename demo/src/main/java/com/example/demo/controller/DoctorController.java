@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.bl.DoctorBl;
+import com.example.demo.bot.BotInit;
 import com.example.demo.dao.ConsultaRepository;
 import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.DoctorEntity;
@@ -15,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -149,12 +151,69 @@ public class DoctorController {
         return new ResponseEntity(new DoctorController.Mensaje("Bien"), HttpStatus.ACCEPTED);
     }
 
+    //Se solicita activar dobleAuth
+    //TODO: DEFINIR URL
+    @GetMapping(value = "/Account/doubleAuth/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public String change_doubleAuth(@PathVariable(value = "idDoctor")int idDoctor) {
+        return doctorBl.change_doubleAuth(idDoctor);
+    }
+
+    //Segundo login con dobleAuth
+    @GetMapping(value = "/loginDoc/doubleAuth/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity doubleAuth(@PathVariable(value = "idDoctor")int idDoctor) throws TelegramApiException {
+        //Cambio al estado opuesto
+        return doctorBl.doubleAuth(idDoctor)? new ResponseEntity(new DoctorController.Mensaje("Bien"), HttpStatus.ACCEPTED):new ResponseEntity(new DoctorController.Mensaje("Incorrecto"), HttpStatus.UNAUTHORIZED);
+    }
+
+    //El doctor ingresa su codigo recibido en telegram
+    @GetMapping(value = "/loginDoc/doubleAuth/{idDoctor}/{code}")
+    @ResponseStatus(HttpStatus.OK)
+    //TODO: Añadir response body con el codigo
+    public ResponseEntity checkCodeDoc(@PathVariable(value = "idDoctor")int idDoctor,@PathVariable(value = "code")String code) throws TelegramApiException {
+        //Cambio al estado opuesto
+        return doctorBl.checkCode(idDoctor, code)? new ResponseEntity(new DoctorController.Mensaje("Bien"), HttpStatus.ACCEPTED):new ResponseEntity(new DoctorController.Mensaje("Incorrecto"), HttpStatus.UNAUTHORIZED);
+    }
+
+    //Se inicia el proceso de recuperacion de contraseña
+    @GetMapping(value = "/passRecovery/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity passRecoveryStart(@PathVariable(value = "idDoctor")int idDoctor) throws TelegramApiException {
+        return doctorBl.checkChatId(idDoctor)? new ResponseEntity(new DoctorController.Mensaje("Bien"), HttpStatus.ACCEPTED):new ResponseEntity(new DoctorController.Mensaje("Incorrecto"), HttpStatus.UNAUTHORIZED);
+    }
+
+    //Si NO existe el chatId se envia un codigo en la pagina para el bot
+    @GetMapping(value = "/passRecovery/setChatId/{idDoctor}")
+    @ResponseStatus(HttpStatus.OK)
+    public String passRecoverySetChatId(@PathVariable(value = "idDoctor")int idDoctor){
+        return doctorBl.createCodeNewPass(idDoctor);
+    }
+
+    //Si existe el chatId se espera un codigo
+    @GetMapping(value = "/passRecovery/enterCode/{idDoctor}/{code}")
+    @ResponseStatus(HttpStatus.OK)
+    //TODO: Añadir response body con el codigo
+    public ResponseEntity passRecoveryEnterCode(@PathVariable(value = "idDoctor")int idDoctor,@PathVariable(value = "code")String code) throws TelegramApiException {
+        //Cambio al estado opuesto
+        return doctorBl.checkCode(idDoctor, code)? new ResponseEntity(new DoctorController.Mensaje("Bien"), HttpStatus.ACCEPTED):new ResponseEntity(new DoctorController.Mensaje("Incorrecto"), HttpStatus.UNAUTHORIZED);
+    }
+
+    //Si el codigo ingresado es correcto recibe la contraseña nueva y la guarda
+    @GetMapping(value = "/passRecovery/enterPass/{idDoctor}/{pass}")
+    @ResponseStatus(HttpStatus.OK)
+    //TODO: Añadir response body con el codigo
+    public ResponseEntity passRecoverySetPass(@PathVariable(value = "idDoctor")int idDoctor,@PathVariable(value = "pass")String pass) throws TelegramApiException {
+        return doctorBl.setNewPass(idDoctor, pass)? new ResponseEntity(new DoctorController.Mensaje("Bien"), HttpStatus.ACCEPTED):new ResponseEntity(new DoctorController.Mensaje("Incorrecto"), HttpStatus.UNAUTHORIZED);
+    }
+
     public static class Mensaje{
         public String mensaje;
         public Mensaje(String mensaje){
             this.mensaje = mensaje;
         }
     }
+
 
 
 }

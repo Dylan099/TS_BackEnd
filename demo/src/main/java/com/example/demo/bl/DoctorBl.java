@@ -2,6 +2,7 @@ package com.example.demo.bl;
 
 
 
+import com.example.demo.bot.BotInit;
 import com.example.demo.dao.DoctorRepository;
 import com.example.demo.dao.PacienteRepository;
 import com.example.demo.dao.StatusRepository;
@@ -17,12 +18,16 @@ import com.itextpdf.text.Image;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Stream;
 
 @Service
@@ -30,13 +35,14 @@ public class DoctorBl {
     private PacienteRepository pacienteRepository;
     private StatusRepository statusRepository;
     private DoctorRepository doctorRepository;
+    private BotInit botBl;
 
     @Autowired
-    public DoctorBl(PacienteRepository pacienteRepository, StatusRepository statusRepository, DoctorRepository doctorRepository) {
-
+    public DoctorBl(PacienteRepository pacienteRepository, StatusRepository statusRepository, DoctorRepository doctorRepository, BotInit botBl) {
         this.pacienteRepository = pacienteRepository;
         this.statusRepository = statusRepository;
         this.doctorRepository = doctorRepository;
+        this.botBl = botBl;
     }
 
 
@@ -175,5 +181,80 @@ public class DoctorBl {
     public void delete_paciente(DoctorEntity doctorEntity) {
         doctorEntity.setEstatus(Estatus.INACTIVE.getStatus());
         doctorRepository.save(doctorEntity);
+    }
+
+    public String change_doubleAuth(int idDoctor){
+        DoctorEntity doctorEntity = doctorRepository.findDoctorEntityByIdDoctor(idDoctor);
+        String code = generateCode(idDoctor);
+        if(doctorEntity.getDobleAuth()!=1){
+            doctorEntity.setLastCod(code);
+            doctorRepository.save(doctorEntity);
+        }else{
+            doctorEntity.setDobleAuth(0);
+            doctorRepository.save(doctorEntity);
+        }
+        return code;
+    }
+
+    public boolean doubleAuth(int idDoctor) throws TelegramApiException {
+        DoctorEntity doctorEntity = doctorRepository.findDoctorEntityByIdDoctor(idDoctor);
+        System.out.println("DocID: "+doctorEntity.getIdDoctor()+" Chat ID -> "+doctorEntity.getTelNum());
+        if(doctorEntity.getLastCod()!=null && doctorEntity.getDobleAuth()==1){
+            botBl.sendCode(doctorEntity);
+        }else{
+            System.out.println("Codigo nulo o no tiene activa la doble autorizacion");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkCode(int idDoctor,String code) throws TelegramApiException {
+        DoctorEntity doctorEntity = doctorRepository.findDoctorEntityByIdDoctor(idDoctor);
+        if(doctorEntity.getLastCod().equals(code)){
+            return true;
+        }else{
+            System.out.println("Codigo nulo o no tiene activa la doble autorizacion");
+            return false;
+        }
+    }
+
+    public boolean checkChatId(int idDoctor) throws TelegramApiException {
+        DoctorEntity doctorEntity = doctorRepository.findDoctorEntityByIdDoctor(idDoctor);
+        System.out.println("ChatID: "+ doctorEntity.getTelNum());
+        System.out.println(doctorEntity.getTelNum() != null && !doctorEntity.getTelNum().isEmpty());
+        if(doctorEntity.getTelNum() != null && !doctorEntity.getTelNum().isEmpty()){
+            botBl.sendCodePass(doctorEntity);
+            return true;
+        }
+        return false;
+    }
+
+    public String createCodeNewPass(int idDoctor){
+        DoctorEntity doctorEntity = doctorRepository.findDoctorEntityByIdDoctor(idDoctor);
+        String code = generateCodePass(idDoctor);
+        doctorEntity.setLastCod(code);
+        doctorRepository.save(doctorEntity);
+        return code;
+    }
+
+    public boolean setNewPass(int idDoctor, String pass){
+        DoctorEntity doctorEntity = doctorRepository.findDoctorEntityByIdDoctor(idDoctor);
+        if(doctorEntity!=null && !pass.isEmpty()){
+            doctorEntity.setPass(pass);
+            doctorRepository.save(doctorEntity);
+            return true;
+        }
+        return false;
+    }
+
+    private String generateCode(int id){
+        String code = String.valueOf(id)+""+(String.valueOf(Math.random() * (9999 - 999)) + 999);
+        System.out.println("Generated Code: ->"+code);
+        return code;
+    }
+    private String generateCodePass(int id){
+        String code = String.valueOf(id)+"-"+(String.valueOf(Math.random() * (9999 - 999)) + 999);
+        System.out.println("Generated Code: ->"+code);
+        return code;
     }
 }

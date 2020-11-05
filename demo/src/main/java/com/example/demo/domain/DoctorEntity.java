@@ -14,6 +14,9 @@ public class DoctorEntity {
     private String username;
     private String pass;
     private int estatus;
+    private int dobleAuth;
+    private String telNum;
+    private String lastCod;
 
     @Id
     @Column(name = "id_doctor")
@@ -95,7 +98,6 @@ public class DoctorEntity {
         this.estatus = estatus;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -115,5 +117,35 @@ public class DoctorEntity {
     @Override
     public int hashCode() {
         return Objects.hash(idDoctor, firstName, lastName, ci, correo, username, pass, estatus);
+    }
+
+    @Basic
+    @Column(name = "doble_auth")
+    public int getDobleAuth() {
+        return dobleAuth;
+    }
+
+    public void setDobleAuth(int dobleAuth) {
+        this.dobleAuth = dobleAuth;
+    }
+
+    @Basic
+    @Column(name = "tel_num")
+    public String getTelNum() {
+        return telNum;
+    }
+
+    public void setTelNum(String telNum) {
+        this.telNum = telNum;
+    }
+
+    @Basic
+    @Column(name = "last_cod")
+    public String getLastCod() {
+        return lastCod;
+    }
+
+    public void setLastCod(String lastCod) {
+        this.lastCod = lastCod;
     }
 }

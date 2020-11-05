@@ -18,6 +18,7 @@ public class PacienteEntity {
     private Integer idDoctor;
     private int numRecomendacion;
     private int estatus;
+    private String lastCode;
 
     @Id
     @Column(name = "id_paciente")
@@ -189,5 +190,15 @@ public class PacienteEntity {
         result = 31 * result + numRecomendacion;
         result = 31 * result + estatus;
         return result;
+    }
+
+    @Basic
+    @Column(name = "last_code")
+    public String getLastCode() {
+        return lastCode;
+    }
+
+    public void setLastCode(String lastCode) {
+        this.lastCode = lastCode;
     }
 }

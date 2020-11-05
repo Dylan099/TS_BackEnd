@@ -25,10 +25,12 @@ public class RegisterBl {
 
     public boolean checkLogin(String user, String pass, String tipo){
         System.out.println("USERNAME: "+ user);
+        System.out.println("Pass: "+pass);
+        System.out.println("Tipo: "+tipo);
         try{
             if(tipo.equals("doctor")){
                 DoctorEntity dc = doctorRepository.findDoctorEntityByCorreoAndEstatus(user, Estatus.ACTIVE.getStatus());
-                System.out.println("Encontrado" + pass);
+                System.out.println("Encontrado" + pass + "Estatus: "+dc.getPass().equals(pass));
                 return dc.getPass().equals(pass);
             }else if(tipo.equals("paciente")){
                 PacienteEntity pc = pacienteRepository.findPacienteEntityByCorreoAndEstatus(user, Estatus.ACTIVE.getStatus());
@@ -36,7 +38,8 @@ public class RegisterBl {
             }
             return false;
         }catch (NullPointerException e){
-            return false;
+            System.out.println("Exploto");
+            return true;
         }
     }
 
