@@ -1,10 +1,13 @@
 package com.example.demo.bl;
 
+import com.example.demo.bot.BotInit;
 import com.example.demo.dao.PacienteRepository;
+import com.example.demo.domain.DoctorEntity;
 import com.example.demo.domain.PacienteEntity;
 import com.example.demo.dto.Estatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.List;
 
@@ -12,11 +15,13 @@ import java.util.List;
 public class PacienteBl {
     PacienteRepository pacienteRepository;
     DoctorBl doctorBl;
+    BotInit botBl;
 
     @Autowired
-    public PacienteBl(PacienteRepository pacienteRepository, DoctorBl doctorBl) {
+    public PacienteBl(PacienteRepository pacienteRepository, DoctorBl doctorBl, BotInit botBl) {
         this.pacienteRepository = pacienteRepository;
         this.doctorBl = doctorBl;
+        this.botBl = botBl;
     }
 
     public PacienteEntity findById(int id){
@@ -59,4 +64,53 @@ public class PacienteBl {
         pacienteEntity.setEstatus(Estatus.INACTIVE.getStatus());
         pacienteRepository.save(pacienteEntity);
     }
+
+    public boolean checkChatIdPac(int idPaciente) throws TelegramApiException {
+        PacienteEntity pacienteEntity = pacienteRepository.findPacienteEntityByIdPaciente(idPaciente);
+        System.out.println("ChatID: "+ pacienteEntity.getTelNum());
+        System.out.println(pacienteEntity.getTelNum() != null && !pacienteEntity.getTelNum().isEmpty());
+        if(pacienteEntity.getTelNum() != null && !pacienteEntity.getTelNum().isEmpty()){
+            botBl.sendCodePassPac(pacienteEntity);
+            return true;
+        }
+        return false;
+    }
+
+    public String createCodeNewPassPac(int idPaciente){
+        PacienteEntity pacienteEntity = pacienteRepository.findPacienteEntityByIdPaciente(idPaciente);
+        String code = generateCodePassPac(idPaciente);
+        pacienteEntity.setLastCode(code);
+        pacienteRepository.save(pacienteEntity);
+        return code;
+    }
+
+    public boolean setNewPassPac(int idPaciente, String pass){
+        PacienteEntity pacienteEntity = pacienteRepository.findPacienteEntityByIdPaciente(idPaciente);
+        if(pacienteEntity!=null && !pass.isEmpty()){
+            pacienteEntity.setPass(pass);
+            pacienteRepository.save(pacienteEntity);
+            return true;
+        }
+        return false;
+    }
+
+    private String generateCodePassPac(int id){
+        String code = String.valueOf(id)+";"+(String.valueOf(Math.random() * (9999 - 999)) + 999);
+        System.out.println("Generated Code: ->"+code);
+        return code;
+    }
+
+    public boolean checkCodePac(int idPaciente,String code) throws TelegramApiException {
+        PacienteEntity pacienteEntity = pacienteRepository.findPacienteEntityByIdPaciente(idPaciente);
+        System.out.println(pacienteEntity.getLastCode()+" "+code);
+
+        if(pacienteEntity.getLastCode().equals(code)){
+            return true;
+        }else{
+            System.out.println("Codigo nulo");
+            return false;
+        }
+    }
+
+
 }

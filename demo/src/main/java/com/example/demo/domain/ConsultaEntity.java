@@ -328,33 +328,4 @@ public class ConsultaEntity {
         result = 31 * result + (covid != null ? covid.hashCode() : 0);
         return result;
     }
-
-    @Override
-    public String toString() {
-        return "Sus sintomas son los siguientes:" +
-                "\n Problemas respiratorios: " + breathingProblem +
-                "\n Fiebre: " + fever +
-                "\n Tos seca: " + dryCough +
-                "\n Dolor de garganta: " + soreThroat +
-                "\n Nariz congestionada: " + runningSe +
-                "\n Asma: " + asthma +
-                "\n Enfermedad pulmonar crónica: " + chronicLungDisease +
-                "\n Dolor de cabeza: " + headache +
-                "\n Enfermedad cardíaca: " + heartDisease +
-                "\n Diabetes: " + diabetes +
-                "\n Hipertension: " + hyperTension +
-                "\n Fatiga: " + fatigue +
-                "\n Problemas gastrointestinales: " + gastrointestinal +
-                "\n Viajes al extranjero: " + abroadTravel +
-                "\n Contacto con pacientes de covid: " + contactWithCovidPatient +
-                "\n Asistio a alguna reunion: " + attendedLargeGathering +
-                "\n Visitó lugares públicos: " + visitedPublicExposedPlaces +
-                "\n Su familia trabaja en lugares expuestos: " + familyWorkingInPublicExposedPlaces +
-                "\n Utilizó  barbijo: " + wearingMasks +
-                "\n Utilizó desinfectante: " + sanitizationFromMarket +
-                "\nResultado: Usted "+covid + " tiene Covid-19";
-    }
-
-
-
 }

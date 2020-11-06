@@ -69,7 +69,7 @@ public class DoctorBl {
         List<PacienteDto> pacienteDtoList = new ArrayList<>();
         for (PacienteEntity pacienteEntity: pacienteEntityList) {
             String status = statusRepository.findByIdStatus(pacienteEntity.getIdStatus()).getEstatus();
-            PacienteDto pacienteDto = new PacienteDto(pacienteEntity.getIdPaciente(), pacienteEntity.getFirstName(), pacienteEntity.getLastName(),pacienteEntity.getCi(),pacienteEntity.getSexo(),pacienteEntity.getEdad(),status,pacienteEntity.getCorreo(),pacienteEntity.getUsername(), pacienteEntity.getPass(), pacienteEntity.getIdDoctor());
+            PacienteDto pacienteDto = new PacienteDto(pacienteEntity.getIdPaciente(), pacienteEntity.getFirstName(), pacienteEntity.getLastName(),pacienteEntity.getCi(),pacienteEntity.getSexo(),pacienteEntity.getEdad(),status,pacienteEntity.getCorreo(),pacienteEntity.getUsername(), pacienteEntity.getPass(), pacienteEntity.getIdDoctor(),pacienteEntity.getLastCode(),pacienteEntity.getTelNum());
             pacienteDtoList.add(pacienteDto);
         }
         return  pacienteDtoList;

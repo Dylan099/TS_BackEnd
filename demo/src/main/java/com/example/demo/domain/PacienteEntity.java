@@ -19,6 +19,7 @@ public class PacienteEntity {
     private int numRecomendacion;
     private int estatus;
     private String lastCode;
+    private String telNum;
 
     @Id
     @Column(name = "id_paciente")
@@ -150,6 +151,16 @@ public class PacienteEntity {
         this.estatus = estatus;
     }
 
+    @Basic
+    @Column(name = "last_code")
+    public String getLastCode() {
+        return lastCode;
+    }
+
+    public void setLastCode(String lastCode) {
+        this.lastCode = lastCode;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -170,6 +181,7 @@ public class PacienteEntity {
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
         if (pass != null ? !pass.equals(that.pass) : that.pass != null) return false;
         if (idDoctor != null ? !idDoctor.equals(that.idDoctor) : that.idDoctor != null) return false;
+        if (lastCode != null ? !lastCode.equals(that.lastCode) : that.lastCode != null) return false;
 
         return true;
     }
@@ -189,16 +201,17 @@ public class PacienteEntity {
         result = 31 * result + (idDoctor != null ? idDoctor.hashCode() : 0);
         result = 31 * result + numRecomendacion;
         result = 31 * result + estatus;
+        result = 31 * result + (lastCode != null ? lastCode.hashCode() : 0);
         return result;
     }
 
     @Basic
-    @Column(name = "last_code")
-    public String getLastCode() {
-        return lastCode;
+    @Column(name = "tel_num")
+    public String getTelNum() {
+        return telNum;
     }
 
-    public void setLastCode(String lastCode) {
-        this.lastCode = lastCode;
+    public void setTelNum(String telNum) {
+        this.telNum = telNum;
     }
 }

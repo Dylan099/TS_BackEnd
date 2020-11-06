@@ -19,23 +19,6 @@ public class PacienteConsultaEntity {
         this.idPacienteConsulta = idPacienteConsulta;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        PacienteConsultaEntity that = (PacienteConsultaEntity) o;
-
-        if (idPacienteConsulta != that.idPacienteConsulta) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return idPacienteConsulta;
-    }
-
     @Basic
     @Column(name = "id_paciente")
     public int getIdPaciente() {
@@ -54,5 +37,27 @@ public class PacienteConsultaEntity {
 
     public void setIdConsulta(int idConsulta) {
         this.idConsulta = idConsulta;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PacienteConsultaEntity that = (PacienteConsultaEntity) o;
+
+        if (idPacienteConsulta != that.idPacienteConsulta) return false;
+        if (idPaciente != that.idPaciente) return false;
+        if (idConsulta != that.idConsulta) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = idPacienteConsulta;
+        result = 31 * result + idPaciente;
+        result = 31 * result + idConsulta;
+        return result;
     }
 }
