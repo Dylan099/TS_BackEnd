@@ -6453,7 +6453,8 @@ CREATE TABLE `paciente` (
   `id_doctor` int(6) UNSIGNED DEFAULT NULL,
   `num_recomendacion` int(11) NOT NULL DEFAULT 0,
   `estatus` int(1) NOT NULL DEFAULT 1,
-  `last_code` varchar(100)
+  `last_code` varchar(100),
+  `tel_num` varchar(100)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
