@@ -30,10 +30,14 @@ public class RecomendacionBl {
     }
 
 
-    public List<RecomendacionEntity> findhrecomendacion(int idPaciente) {
+    public List<String> findhrecomendacion(int idPaciente) {
         List<RecomendacionEntity> recomendacionDtoList= new ArrayList<>();
+        List<String > recomendacionList= new ArrayList<>();
         recomendacionDtoList = recomendacionRepository.findAllByIdPaciente(idPaciente);
-        return recomendacionDtoList;
+        for (RecomendacionEntity recomendacionEntity : recomendacionDtoList) {
+            recomendacionList.add(recomendacionEntity.getRecomendacion());
+        }
+        return recomendacionList;
     }
 
     public int findnewrecomendacion(int idPaciente) {
