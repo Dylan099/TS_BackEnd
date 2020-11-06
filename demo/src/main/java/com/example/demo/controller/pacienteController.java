@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -75,8 +76,7 @@ public class pacienteController {
         }
         if(registerBl.verificarCorreoExistentePaciente(pacienteRequest.getCorreo()))
             return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
-        registerBl.registrarPaciente(new PacienteDto(pacienteRequest.getFirstName(),pacienteRequest.getLastName(),pacienteRequest.getCi(),
-                pacienteRequest.getSexo(),pacienteRequest.getEdad(),"1",pacienteRequest.getCorreo(),pacienteRequest.getUsername(),pacienteRequest.getPass()));
+        registerBl.registrarPaciente(new PacienteDto(pacienteRequest.getFirstName(),pacienteRequest.getLastName(),pacienteRequest.getCi(),pacienteRequest.getSexo(),pacienteRequest.getEdad(),"1",pacienteRequest.getCorreo(),pacienteRequest.getUsername(),pacienteRequest.getPass()));
         return new ResponseEntity(new Mensaje("Creado"), HttpStatus.CREATED);
     }
 
@@ -104,6 +104,37 @@ public class pacienteController {
         System.out.println("delete>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         pacienteBl.delete_paciente(pacienteEntity);
         return new ResponseEntity(new pacienteController.Mensaje("Bien"), HttpStatus.ACCEPTED);
+    }
+
+    //Se inicia el proceso de recuperacion de contraseña
+    @GetMapping(value = "/passRecoveryPac/{idPaciente}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity passRecoveryStartPac(@PathVariable(value = "idPaciente")int idDoctor) throws TelegramApiException {
+        return pacienteBl.checkChatIdPac(idDoctor)? new ResponseEntity(new DoctorController.Mensaje("Bien"), HttpStatus.ACCEPTED):new ResponseEntity(new DoctorController.Mensaje("Incorrecto"), HttpStatus.UNAUTHORIZED);
+    }
+
+    //Si NO existe el chatId se envia un codigo en la pagina para el bot
+    @GetMapping(value = "/passRecoveryPac/setChatId/{idPaciente}")
+    @ResponseStatus(HttpStatus.OK)
+    public String passRecoverySetChatIdPac(@PathVariable(value = "idPaciente")int idDoctor){
+        return pacienteBl.createCodeNewPassPac(idDoctor);
+    }
+
+    //Si existe el chatId se espera un codigo
+    @GetMapping(value = "/passRecoveryPac/enterCode/{idPaciente}/{code}")
+    @ResponseStatus(HttpStatus.OK)
+    //TODO: Añadir response body con el codigo
+    public ResponseEntity passRecoveryEnterCodePac(@PathVariable(value = "idPaciente")int idDoctor,@PathVariable(value = "code")String code) throws TelegramApiException {
+        //Cambio al estado opuesto
+        return pacienteBl.checkCodePac(idDoctor, code)? new ResponseEntity(new DoctorController.Mensaje("Bien"), HttpStatus.ACCEPTED):new ResponseEntity(new DoctorController.Mensaje("Incorrecto"), HttpStatus.UNAUTHORIZED);
+    }
+
+    //Si el codigo ingresado es correcto recibe la contraseña nueva y la guarda
+    @GetMapping(value = "/passRecoveryPac/enterPass/{idPaciente}/{pass}")
+    @ResponseStatus(HttpStatus.OK)
+    //TODO: Añadir response body con el codigo
+    public ResponseEntity passRecoverySetPassPac(@PathVariable(value = "idPaciente")int idDoctor,@PathVariable(value = "pass")String pass) throws TelegramApiException {
+        return pacienteBl.setNewPassPac(idDoctor, pass)? new ResponseEntity(new DoctorController.Mensaje("Bien"), HttpStatus.ACCEPTED):new ResponseEntity(new DoctorController.Mensaje("Incorrecto"), HttpStatus.UNAUTHORIZED);
     }
 
 

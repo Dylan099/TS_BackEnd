@@ -57,4 +57,7 @@ public interface PacienteRepository extends JpaRepository<PacienteEntity,Integer
             nativeQuery = true)
     int[] findCountPacienteEdades(int id_doctor,int id_status);
 
+    PacienteEntity findPacienteEntityByLastCode(String lastCode);
+
+
 }

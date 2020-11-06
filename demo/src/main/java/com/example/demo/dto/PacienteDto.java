@@ -12,8 +12,10 @@ public class PacienteDto {
     private String username;
     private String pass;
     private Integer idDoctor;
+    private String telNum;
+    private String lastCode;
 
-    public PacienteDto(int idPaciente, String firstName, String lastName, String ci, String sexo, String edad, String idStatus, String correo, String username, String pass, Integer idDoctor) {
+    public PacienteDto(int idPaciente, String firstName, String lastName, String ci, String sexo, String edad, String idStatus, String correo, String username, String pass, Integer idDoctor, String lastCode,String telNum) {
         this.idPaciente = idPaciente;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,6 +27,8 @@ public class PacienteDto {
         this.username = username;
         this.pass = pass;
         this.idDoctor = idDoctor;
+        this.telNum = telNum;
+        this.lastCode = lastCode;
     }
 
     public PacienteDto(String firstName, String lastName, String ci, String sexo, String edad, String idStatus, String correo, String username, String pass) {
@@ -39,6 +43,21 @@ public class PacienteDto {
         this.pass = pass;
     }
 
+    public String getTelNum() {
+        return telNum;
+    }
+
+    public void setTelNum(String telNum) {
+        this.telNum = telNum;
+    }
+
+    public String getLastCode() {
+        return lastCode;
+    }
+
+    public void setLastCode(String lastCode) {
+        this.lastCode = lastCode;
+    }
 
     public int getIdPaciente() {
         return idPaciente;
