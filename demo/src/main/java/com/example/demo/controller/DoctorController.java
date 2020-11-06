@@ -2,8 +2,10 @@ package com.example.demo.controller;
 
 
 import com.example.demo.bl.DoctorBl;
+import com.example.demo.bl.RegisterBl;
 import com.example.demo.bot.BotInit;
 import com.example.demo.dao.ConsultaRepository;
+import com.example.demo.dao.DoctorRepository;
 import com.example.demo.dao.PacienteRepository;
 import com.example.demo.domain.DoctorEntity;
 import com.example.demo.dto.PacienteDto;
@@ -27,12 +29,16 @@ import java.util.List;
 @RestController
 public class DoctorController {
     DoctorBl doctorBl;
+    RegisterBl registerBl;
+    DoctorRepository doctorRepository;
     PacienteRepository pacienteRepository;
     ConsultaRepository consultaRepository;
 
     @Autowired
-    public DoctorController(DoctorBl doctorBl, PacienteRepository pacienteRepository, ConsultaRepository consultaRepository) {
+    public DoctorController(DoctorBl doctorBl,RegisterBl registerBl, DoctorRepository doctorRepository, PacienteRepository pacienteRepository, ConsultaRepository consultaRepository) {
         this.doctorBl = doctorBl;
+        this.registerBl = registerBl;
+        this.doctorRepository = doctorRepository;
         this.pacienteRepository = pacienteRepository;
         this.consultaRepository = consultaRepository;
     }
@@ -151,6 +157,8 @@ public class DoctorController {
         return new ResponseEntity(new DoctorController.Mensaje("Bien"), HttpStatus.ACCEPTED);
     }
 
+
+
     //Se solicita activar dobleAuth
     //TODO: DEFINIR URL
     @GetMapping(value = "/Account/doubleAuth/{idDoctor}")
@@ -159,12 +167,24 @@ public class DoctorController {
         return doctorBl.change_doubleAuth(idDoctor);
     }
 
+
+    @RequestMapping(value = "/logindoctor", method = RequestMethod.POST)
+    public ResponseEntity loginDoc(@RequestBody DoctorEntity doctorRequest, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity(new pacienteController.Mensaje("Error"), HttpStatus.BAD_REQUEST);
+        }
+        if(registerBl.checkLogin(doctorRequest.getCorreo(),doctorRequest.getPass(),"doctor"))
+            return new ResponseEntity(doctorRepository.findDoctorEntityByCorreo(doctorRequest.getCorreo()).getIdDoctor(), HttpStatus.ACCEPTED);
+        else
+            return new ResponseEntity(new pacienteController.Mensaje("Error"), HttpStatus.BAD_REQUEST);
+    }
+
     //Segundo login con dobleAuth
     @GetMapping(value = "/loginDoc/doubleAuth/{idDoctor}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity doubleAuth(@PathVariable(value = "idDoctor")int idDoctor) throws TelegramApiException {
         //Cambio al estado opuesto
-        return doctorBl.doubleAuth(idDoctor)? new ResponseEntity(new DoctorController.Mensaje("Bien"), HttpStatus.ACCEPTED):new ResponseEntity(new DoctorController.Mensaje("Incorrecto"), HttpStatus.UNAUTHORIZED);
+        return doctorBl.doubleAuth(idDoctor)? new ResponseEntity(true, HttpStatus.ACCEPTED):new ResponseEntity( false, HttpStatus.OK);
     }
 
     //El doctor ingresa su codigo recibido en telegram

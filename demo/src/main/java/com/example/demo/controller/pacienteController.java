@@ -32,16 +32,6 @@ public class pacienteController {
         this.doctorRepository = doctorRepository;
     }
 
-    @RequestMapping(value = "/logindoctor", method = RequestMethod.POST)
-    public ResponseEntity loginDoc(@RequestBody DoctorEntity doctorRequest, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
-        }
-        if(registerBl.checkLogin(doctorRequest.getCorreo(),doctorRequest.getPass(),"doctor"))
-            return new ResponseEntity(doctorRepository.findDoctorEntityByCorreo(doctorRequest.getCorreo()).getIdDoctor(), HttpStatus.ACCEPTED);
-        else
-            return new ResponseEntity(new Mensaje("Error"), HttpStatus.BAD_REQUEST);
-    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity loginPac(@RequestBody PacienteEntity pacienteRequest, BindingResult bindingResult){

@@ -16,11 +16,13 @@ import java.util.List;
 public class RegisterBl {
     DoctorRepository doctorRepository;
     PacienteRepository pacienteRepository;
+    DoctorBl doctorBl;
 
     @Autowired
-    public RegisterBl(DoctorRepository doctorRepository, PacienteRepository pacienteRepository) {
+    public RegisterBl(DoctorRepository doctorRepository, PacienteRepository pacienteRepository, DoctorBl doctorBl) {
         this.doctorRepository = doctorRepository;
         this.pacienteRepository = pacienteRepository;
+        this.doctorBl = doctorBl;
     }
 
     public boolean checkLogin(String user, String pass, String tipo){
@@ -32,6 +34,7 @@ public class RegisterBl {
                 DoctorEntity dc = doctorRepository.findDoctorEntityByCorreoAndEstatus(user, Estatus.ACTIVE.getStatus());
                 System.out.println("Encontrado" + pass + "Estatus: "+dc.getPass().equals(pass));
                 return dc.getPass().equals(pass);
+
             }else if(tipo.equals("paciente")){
                 PacienteEntity pc = pacienteRepository.findPacienteEntityByCorreoAndEstatus(user, Estatus.ACTIVE.getStatus());
                 return pc.getPass().equals(pass);
