@@ -58,6 +58,4 @@ public interface PacienteRepository extends JpaRepository<PacienteEntity,Integer
     int[] findCountPacienteEdades(int id_doctor,int id_status);
 
     PacienteEntity findPacienteEntityByLastCode(String lastCode);
-
-
 }

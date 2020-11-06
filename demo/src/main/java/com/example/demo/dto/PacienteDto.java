@@ -146,4 +146,6 @@ public class PacienteDto {
     public void setIdDoctor(Integer idDoctor) {
         this.idDoctor = idDoctor;
     }
+
+
 }

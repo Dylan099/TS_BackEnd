@@ -17,7 +17,6 @@ import javax.annotation.PostConstruct;
 @Component
 public class BotInit {
 
-
     TelegramBot telegramBot;
     DoctorRepository doctorBl;
     PacienteRepository pacienteBl;
@@ -57,7 +56,7 @@ public class BotInit {
     }
 
     private String generateCode(int id){
-        String code = String.valueOf(id)+""+(String.valueOf(Math.random() * (9999 - 999)) + 999);
+        String code = String.valueOf(id)+""+(String.valueOf((int) (Math.random()*(9999-999)+999)));
         System.out.println("Generated Code: ->"+code);
         return code;
     }
@@ -71,7 +70,7 @@ public class BotInit {
 
 
     private String generateCodePass(int id){
-        String code = String.valueOf(id)+"-"+(String.valueOf(Math.random() * (9999 - 999)) + 999);
+        String code = String.valueOf(id)+"-"+(String.valueOf((int) (Math.random()*(9999-999)+999)));
         System.out.println("Generated Code: ->"+code);
         return code;
     }
@@ -87,7 +86,7 @@ public class BotInit {
     }
 
     private String generateCodePassPac(int id){
-        String code = String.valueOf(id)+"&"+(String.valueOf(Math.random() * (9999 - 999)) + 999);
+        String code = String.valueOf(id)+"&"+(String.valueOf((int) (Math.random()*(9999-999)+999)));
         System.out.println("Generated Code: ->"+code);
         return code;
     }

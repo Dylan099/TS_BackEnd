@@ -66,7 +66,9 @@ public class TelegramBot extends TelegramLongPollingBot {
                                 .setChatId(update.getMessage().getChatId())
                                 .setText("No pudimos detectar el codigo que ingreso, por favor revise la pagina e intente nuevamente");
                     }
-                }else { if(doctorEntity!=null){
+                }else {
+                    if(doctorEntity!=null)
+                    {
                         doctorEntity.setDobleAuth(1);
                         doctorEntity.setTelNum(update.getMessage().getChatId().toString());
                         doctorBl.save(doctorEntity);

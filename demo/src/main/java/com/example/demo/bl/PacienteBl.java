@@ -95,7 +95,7 @@ public class PacienteBl {
     }
 
     private String generateCodePassPac(int id){
-        String code = String.valueOf(id)+";"+(String.valueOf(Math.random() * (9999 - 999)) + 999);
+        String code = String.valueOf(id)+";"+(String.valueOf((int) (Math.random()*(9999-999)+999)));
         System.out.println("Generated Code: ->"+code);
         return code;
     }
