@@ -159,6 +159,14 @@ public class DoctorController {
 
 
 
+    @PostMapping(value = "/reactivationDoctor")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity reactivationDoctor(@RequestBody DoctorEntity doctorEntity, BindingResult bindingResult) {
+        //Recupera los datos de los pacientes del doctor con el id ""
+        boolean ret = doctorBl.reactivationDoctor(doctorEntity);
+        return new ResponseEntity(ret, HttpStatus.ACCEPTED);
+    }
+
     //Se solicita activar dobleAuth
     //TODO: DEFINIR URL
     @GetMapping(value = "/Account/doubleAuth/{idDoctor}")

@@ -15,6 +15,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.Image;
+import com.example.demo.dto.Estatus;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -176,6 +177,21 @@ public class DoctorBl {
     public void actualizar_datos(DoctorEntity doctorEntity) {
         doctorRepository.save(doctorEntity);
     }
+
+
+
+    public boolean reactivationDoctor(DoctorEntity doctorEntity) {
+        boolean ret = false;
+        List<DoctorEntity> sino = doctorRepository.existsByDoctorEntity (doctorEntity.getFirstName(), doctorEntity.getLastName(), doctorEntity.getCi(), doctorEntity.getCorreo(), doctorEntity.getUsername(), doctorEntity.getPass(), Estatus.INACTIVE.getStatus() );
+        if(sino.get(0) != null )
+        {
+            sino.get(0).setEstatus(Estatus.ACTIVE.getStatus());
+            doctorRepository.save(sino.get(0));
+            ret = true;
+        }
+        return ret;
+    }
+
 
 
     public void delete_paciente(DoctorEntity doctorEntity) {

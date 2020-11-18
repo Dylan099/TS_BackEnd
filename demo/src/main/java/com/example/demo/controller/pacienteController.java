@@ -33,6 +33,14 @@ public class pacienteController {
         this.doctorRepository = doctorRepository;
     }
 
+    @PostMapping(value = "/reactivationPaciente")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity reactivationPaciente(@RequestBody PacienteEntity pacienteEntity, BindingResult bindingResult) {
+        //Recupera los datos de los pacientes del doctor con el id ""
+        boolean ret = pacienteBl.reactivationPaciente(pacienteEntity);
+        return new ResponseEntity(ret, HttpStatus.ACCEPTED);
+    }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity loginPac(@RequestBody PacienteEntity pacienteRequest, BindingResult bindingResult){

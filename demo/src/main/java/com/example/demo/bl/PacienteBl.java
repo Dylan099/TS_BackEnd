@@ -112,5 +112,16 @@ public class PacienteBl {
         }
     }
 
+    public boolean reactivationPaciente(PacienteEntity pacienteEntity) {
+        boolean ret = false;
+        List<PacienteEntity> sino = pacienteRepository.existsByPacienteEntity(pacienteEntity.getFirstName(), pacienteEntity.getLastName(), pacienteEntity.getCi(), pacienteEntity.getCorreo(), pacienteEntity.getUsername(), pacienteEntity.getPass(), Estatus.INACTIVE.getStatus() );
+        if(sino.get(0) != null )
+        {
+            sino.get(0).setEstatus(Estatus.ACTIVE.getStatus());
+            pacienteRepository.save(sino.get(0));
+            ret = true;
+        }
+        return ret;
+    }
 
 }

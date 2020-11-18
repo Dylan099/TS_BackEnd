@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.domain.DoctorEntity;
 import com.example.demo.domain.PacienteEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -58,4 +59,17 @@ public interface PacienteRepository extends JpaRepository<PacienteEntity,Integer
     int[] findCountPacienteEdades(int id_doctor,int id_status);
 
     PacienteEntity findPacienteEntityByLastCode(String lastCode);
+
+
+    @Query(
+            value = "SELECT * FROM paciente p \n" +
+                    "WHERE p.first_name = ?1 \n" +
+                    "    AND p.last_name = ?2 \n" +
+                    "    AND p.ci = ?3 \n" +
+                    "    AND p.correo = ?4 \n" +
+                    "    AND p.username = ?5 \n" +
+                    "    AND p.pass = ?6 \n" +
+                    "    AND p.estatus = ?7",
+            nativeQuery = true)
+    List<PacienteEntity> existsByPacienteEntity(String firstname, String lastname, String ci, String correo, String username, String pass, int status);
 }
