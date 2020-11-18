@@ -8420,3 +8420,8 @@ ALTER TABLE `paciente_consulta`
 ALTER TABLE `recomendacion`
   ADD CONSTRAINT `recomendacion_ibfk_1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`);
 COMMIT;
+
+
+CREATE TABLE `tds`. ( `id_hospital` INT NOT NULL AUTO_INCREMENT , `hospital` VARCHAR(100) NOT NULL , `latitud` DOUBLE NOT NULL , `longitud` DOUBLE NOT NULL , PRIMARY KEY (`id_hospital`)) ENGINE = InnoDB;
+
+INSERT INTO `hospital` (`id_hospital`, `hospital`, `latitud`, `longitud`) VALUES (NULL, 'Hospital Metodista', '-16.527151', '-68.104411'), (NULL, 'CES Especialidades Medicas (labiratorio MIC)', '-16.526078', '-68.110231');
