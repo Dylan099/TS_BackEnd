@@ -32,16 +32,27 @@ public class RegisterBl {
         try{
             if(tipo.equals("doctor")){
                 DoctorEntity dc = doctorRepository.findDoctorEntityByCorreoAndEstatus(user, Estatus.ACTIVE.getStatus());
-                System.out.println("Encontrado" + pass + "Estatus: "+dc.getPass().equals(pass));
-                return dc.getPass().equals(pass);
+                if (dc!=null)
+                {
+                    System.out.println("Encontrado" + pass + "Estatus: "+dc.getPass().equals(pass));
+                    return dc.getPass().equals(pass);
+                }else{
+                    return false;
+                }
+
 
             }else if(tipo.equals("paciente")){
                 PacienteEntity pc = pacienteRepository.findPacienteEntityByCorreoAndEstatus(user, Estatus.ACTIVE.getStatus());
-                return pc.getPass().equals(pass);
+                if (pc!=null)
+                {
+                    return pc.getPass().equals(pass);
+                }else{
+                    return false;
+                }
             }
             return false;
         }catch (NullPointerException e){
-            System.out.println("Exploto");
+            System.out.println("Exploto "+e);
             return true;
         }
     }

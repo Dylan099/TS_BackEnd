@@ -328,4 +328,39 @@ public class ConsultaEntity {
         result = 31 * result + (covid != null ? covid.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Sus sintomas son los siguientes:" +
+                ", Fecha de la consulta:'" + dateConsulta + '\'' +
+                "\n Problemas respiratorios: " + sino(breathingProblem) +
+                "\n Fiebre: " + sino(fever) +
+                "\n Tos seca: " + sino(dryCough) +
+                "\n Dolor de garganta: " + sino(soreThroat) +
+                "\n Nariz congestionada: " + sino(runningSe) +
+                "\n Asma: " + sino(asthma) +
+                "\n Enfermedad pulmonar crónica: " + sino(chronicLungDisease) +
+                "\n Dolor de cabeza: " + sino(headache) +
+                "\n Enfermedad cardíaca: " + sino(heartDisease) +
+                "\n Diabetes: " + sino(diabetes) +
+                "\n Hipertension: " + sino(hyperTension) +
+                "\n Fatiga: " + sino(fatigue) +
+                "\n Problemas gastrointestinales: " + sino(gastrointestinal) +
+                "\n Viajes al extranjero: " + sino(abroadTravel) +
+                "\n Contacto con pacientes de covid: " + sino(contactWithCovidPatient) +
+                "\n Asistio a alguna reunion: " + sino(attendedLargeGathering) +
+                "\n Visitó lugares públicos: " + sino(visitedPublicExposedPlaces) +
+                "\n Su familia trabaja en lugares expuestos: " + sino(familyWorkingInPublicExposedPlaces) +
+                "\n Utilizó  barbijo: " + sino(wearingMasks) +
+                "\n Utilizó desinfectante: " + sino(sanitizationFromMarket) +
+                "\nResultado: Usted es "+sino(covid) + " a Covid-19";
+    }
+
+    private String sino (String dato)
+    {
+        if(dato.equals("0"))
+            return "Negativo";
+        else
+            return "Positivo";
+    }
 }
