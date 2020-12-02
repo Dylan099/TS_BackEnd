@@ -2,7 +2,6 @@ import pymysql
 import pandas as pd
 import numpy as np
 
-
 from mypackage.NeuralLayer import NeuralLayer
 from mypackage.DataBase import DataBase
 
@@ -79,7 +78,7 @@ class Prediccion:
     def creacion():
         global R
         #Parametros de la red
-        n = 5434 #numero de datos en el dataset
+        n = 6221 #numero de datos en el dataset
         p = 20 #caracteristicas del dataset
 
         #Datos para el entrenamiento

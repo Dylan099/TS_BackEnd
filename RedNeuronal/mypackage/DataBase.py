@@ -15,7 +15,7 @@ class DataBase:
         self.cursor = self.connectiondb.cursor()
     
     def select_dataset_x(self):
-        sql = 'SELECT BreathingProblem,Fever,DryCough,SoreThroat,Running0se,Asthma,ChronicLungDisease,Headache,HeartDisease,Diabetes,HyperTension,Fatigue,Gastrointestinal,AbroadTravel,ContactWithCovidPatient,AttendedLargeGathering,VisitedPublicExposedPlaces, FamilyWorkingInPublicExposedPlaces,WearingMasks,SanitizationFromMarket FROM dataset'
+        sql = 'SELECT breathing_problem,fever,dry_cough,sore_throat,running_se,asthma,chronic_lung_disease,headache,heart_disease,diabetes,hyper_tension,fatigue,gastrointestinal,abroad_travel,contact_with_covid_patient,attended_large_gathering,visited_public_exposed_places,family_working_in_public_exposed_places,wearing_masks,sanitization_from_market FROM dataset'
         ret = []
         try:
             self.cursor.execute(sql)

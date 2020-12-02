@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2c9adb7e-7767-4358-83e5-2026d726bb56" name="Default Changelist" comment="" />
+    <list default="true" id="2c9adb7e-7767-4358-83e5-2026d726bb56" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/TS_BackEnd.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TS_BackEnd.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RedNeuronal/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/RedNeuronal/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RedNeuronal/mypackage/Prediccion.py" beforeDir="false" afterPath="$PROJECT_DIR$/RedNeuronal/mypackage/Prediccion.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,6 +41,9 @@
       <option name="presentableId" value="Default" />
       <updated>1604616414259</updated>
       <workItem from="1604616416609" duration="127000" />
+      <workItem from="1606932961770" duration="1265000" />
+      <workItem from="1606938670119" duration="663000" />
+      <workItem from="1606940783700" duration="39000" />
     </task>
     <servers />
   </component>
