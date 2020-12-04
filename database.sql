@@ -3,12 +3,6 @@
 -- Base de datos: `tds`
 --
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `consulta`
---
-
 CREATE TABLE `consulta` (
   `id_consulta` int(6) UNSIGNED NOT NULL,
   `date_consulta` varchar(50) DEFAULT NULL,
